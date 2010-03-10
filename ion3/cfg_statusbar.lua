@@ -36,7 +36,7 @@ mod_statusbar.create{
     -- right, respectively, and %systray is a placeholder for system tray
     -- windows and icons.
     --
-    template="[ %date || load: %load || mem: %meminfo_mem_used/%meminfo_mem_total || batt: %linuxbatt%linuxbatt_state ] %filler%systray",
+    template="[ %date || load: %load || mem: %meminfo_mem_used/%meminfo_mem_total || batt: %linuxbatt%linuxbatt_state/%linuxbatt1%linuxbatt1_state] %filler%systray",
     --template="[ %date || load:% %>load || mail:% %>mail_new/%>mail_total ] %filler%systray",
     --template="[ %date || load: %05load_1min || mail: %02mail_new/%02mail_total ] %filler%systray",
 }
@@ -92,6 +92,13 @@ mod_statusbar.launch_statusd{
     linuxbatt={
 	--update_interval=15*1000,
         bat=0,
+        important_threshold=30,
+        critical_threshold=10,
+    },
+
+    linuxbatt1={
+	--update_interval=15*1000,
+        bat=1,
         important_threshold=30,
         critical_threshold=10,
     },

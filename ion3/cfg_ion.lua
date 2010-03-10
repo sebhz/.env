@@ -41,7 +41,7 @@ ioncore.set{
     --warp=true,
     
     -- Switch frames to display newly mapped windows
-    switchto=false,
+    switchto=true,
     
     -- Default index for windows in frames: one of 'last', 'next' (for
     -- after current), or 'next-act' (for after current and anything with
