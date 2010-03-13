@@ -15,52 +15,82 @@
 
 local defaults={
         update_interval=15*1000,
-        bat=0,
+        bat= {0, 1, 2},
         important_threshold=30,
         critical_threshold=10,
 }
 local settings=table.join(statusd.get_config("linuxbatt"), defaults)
 
 function linuxbatt_do_find_capacity()
-        local f=io.open('/proc/acpi/battery/BAT'.. settings.bat ..'/info')
-        local infofile=f:read('*a')
-        f:close()
-        local i, j, capacity = string.find(infofile, 'last full capacity:%s*(%d+) .*')
-        return capacity
+	local c = {}
+
+	for n, bat in ipairs(settings.bat) do
+        local f=io.open('/proc/acpi/battery/BAT'.. bat ..'/info')
+		local i, j, capacity
+		if f then
+        	local infofile=f:read('*a')
+        	f:close()
+        	i, j, capacity = string.find(infofile, 'last full capacity:%s*(%d+) .*')
+		else
+			capacity = nil
+		end
+        c[n] = capacity
+	end
+	return c
 end
 
 local capacity = linuxbatt_do_find_capacity()
 
 function get_linuxbatt()
-	
-        local f=io.open('/proc/acpi/battery/BAT'.. settings.bat ..'/state')
-	local statefile=f:read('*a')
-	f:close()
-        local i, j, remaining = string.find(statefile, 'remaining capacity:%s*(%d+) .*')
-        local percent = math.floor( remaining * 100 / capacity )
+	local b = {}
 
-        local i, j, statename = string.find(statefile, 'charging state:%s*(%a+).*')
-        if statename == "charging" then
-                return percent, "+"
-        elseif statename == "discharging" then
-                return percent, "-"
-        else
-                return percent, " "
-        end
+	for n, bat in ipairs(settings.bat) do
+        local f=io.open('/proc/acpi/battery/BAT'.. bat ..'/state')
+		if f then
+			local statefile=f:read('*a')
+			f:close()
+        	local i, j, remaining = string.find(statefile, 'remaining capacity:%s*(%d+) .*')
+        	local percent = math.floor( remaining * 100 / capacity[n] )
+
+        	local i, j, statename = string.find(statefile, 'charging state:%s*(%a+).*')
+        	if statename == "charging" then
+                b[n] = {percent, "+"}
+        	elseif statename == "discharging" then
+                b[n] = { percent, "-"}
+        	else
+                b[n] = { percent, ""}
+        	end
+		else
+			b[n] = nil
+		end
+	end
+	return b
 end
 
 function update_linuxbatt()
-	local perc, state = get_linuxbatt()
-	statusd.inform("linuxbatt", tostring(perc))
-	statusd.inform("linuxbatt_state", state)
-        if perc < settings.critical_threshold
-        then statusd.inform("linuxbatt_hint", "critical")
-        elseif perc < settings.important_threshold
-        then statusd.inform("linuxbatt_hint", "important")
-        else statusd.inform("linuxbatt_hint", "normal")
-        end
+	local bat = get_linuxbatt()
+	local s = ""
+	local n = 0
+	local p = 0
+	for b, state in ipairs(bat) do
+		if state then
+			if s ~= "" then s = s .. "/" end
+			local perc = state[1];
+			s = s .. tostring(perc) .. state[2]
+		n = n + 1
+			p = p+perc
+		end
+	end
+	statusd.inform("linuxbatt", s)
+	local perc = p/n
+	if perc < settings.critical_threshold
+   	then print("linuxbatt_hint", "critical")
+   	elseif perc < settings.important_threshold
+   	then print("linuxbatt_hint", "important")
+   	else print("linuxbatt_hint", "normal")
+	end
 	linuxbatt_timer:set(settings.update_interval, update_linuxbatt)
-end
+ end
 
 linuxbatt_timer = statusd.create_timer()
 update_linuxbatt()
