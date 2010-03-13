@@ -81,7 +81,7 @@ datewidget = widget({type = "textbox"})
 vicious.register(datewidget,  vicious.widgets.date, "%R", 60)
 
 memwidget = widget({type = "textbox"})
-vicious.register(memwidget,  vicious.widgets.mem, "$1 ($2MB/$3MB)", 60)
+vicious.register(memwidget,  vicious.widgets.mem, " || mem: $2MB/$3MB", 60)
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
