@@ -76,7 +76,12 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 
 -- {{{ Wibox
 -- Create a textclock widget
-mytextclock = awful.widget.textclock({ align = "right" })
+--mytextclock = awful.widget.textclock({ align = "right" })
+datewidget = widget({type = "textbox"})
+vicious.register(datewidget,  vicious.widgets.date, "%R", 60)
+
+memwidget = widget({type = "textbox"})
+vicious.register(memwidget,  vicious.widgets.mem, "$1 ($2MB/$3MB)", 60)
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
@@ -150,7 +155,9 @@ for s = 1, screen.count() do
             layout = awful.widget.layout.horizontal.leftright
         },
         mylayoutbox[s],
-        mytextclock,
+        --mytextclock,
+		memwidget,
+		datewidget,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
