@@ -91,14 +91,7 @@ mod_statusbar.launch_statusd{
 
     linuxbatt={
 	--update_interval=15*1000,
-        bat={0, 1},
-        important_threshold=30,
-        critical_threshold=10,
-    },
-
-    linuxbatt1={
-	--update_interval=15*1000,
-        bat=1,
+        bat={1, 0},
         important_threshold=30,
         critical_threshold=10,
     },
