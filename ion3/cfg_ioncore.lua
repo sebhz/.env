@@ -63,9 +63,6 @@ defbindings("WScreen", {
     
     bdoc("Create a new workspace of chosen default type."),
     kpress(META.."F9", "ioncore.create_ws(_)"),
-
-    bdoc("Screen capture - use xmodmap to bind F13 to some relevant key."),
-    kpress("F13", "ioncore.exec_on(_, 'import -window root /tmp/scr`date +%s`.png')"),
     
     bdoc("Display the main menu."),
     kpress(ALTMETA.."F12", "mod_query.query_menu(_, _sub, 'mainmenu', 'Main menu:')"),
@@ -132,12 +129,6 @@ defbindings("WGroupCW", {
 defbindings("WMPlex", {
     bdoc("Close current object."),
     kpress_wait(META.."C", "WRegion.rqclose_propagate(_, _sub)"),
-
-    bdoc("Nest floating workspace."),
-    kpress(META.."Shift+F9", "WMPlex.attach_new(_, {type='WGroupWS'})"),
-
-    bdoc("Nest tiling workspace."),
-    kpress(META.."Shift+F10", "WMPlex.attach_new(_, {type='WTiling'})"),
 })
 
 -- Frames for transient windows ignore this bindmap
@@ -152,7 +143,7 @@ defbindings("WMPlex.toplevel", {
     kpress(META.."F1", "ioncore.exec_on(_, ':man ion3')"),
 
     bdoc("Run a terminal emulator."),
-    kpress(ALTMETA.."F2", "ioncore.exec_on(_, XTERM or 'xterm')"),
+    kpress(ALTMETA.."F2", "ioncore.exec_on(_, XTERM or 'x-terminal-emulator')"),
     
     bdoc("Query for command line to execute."),
     kpress(ALTMETA.."F3", "mod_query.query_exec(_)"),
@@ -338,11 +329,13 @@ defbindings("WMoveresMode", {
 -- Main menu
 defmenu("mainmenu", {
     menuentry("Run...",         "mod_query.query_exec(_)"),
-    menuentry("Terminal",       "ioncore.exec_on(_, XTERM or 'xterm')"),
-    menuentry("Lock screen",    "ioncore.exec_on(_, 'xlock')"),
+    menuentry("Terminal",       "ioncore.exec_on(_, XTERM or 'x-terminal-emulator')"),
+    menuentry("Lock screen",
+              "ioncore.exec_on(_, ioncore.lookup_script('ion-lock'))"),
     menuentry("Help",           "mod_query.query_man(_)"),
     menuentry("About Ion",      "mod_query.show_about_ion(_)"),
     submenu("Styles",           "stylemenu"),
+    submenu("Debian",           "Debian"),
     submenu("Session",          "sessionmenu"),
 })
 
@@ -388,3 +381,12 @@ defctxmenu("WGroupWS", "Workspace", {
 defctxmenu("WClientWin", "Client window", {
     menuentry("Kill",           "WClientWin.kill(_)"),
 })
+
+-- Auto-generated Debian menu definitions
+if os and os.execute("test -x /usr/bin/update-menus") == 0 then
+    if ioncore.is_i18n() then
+        dopath("debian-menu-i18n")
+    else
+        dopath("debian-menu")
+    end
+end
