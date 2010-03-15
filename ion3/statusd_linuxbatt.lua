@@ -30,7 +30,7 @@ function linuxbatt_do_find_capacity()
 		if f then
         	local infofile=f:read('*a')
         	f:close()
-        	i, j, capacity = string.find(infofile, 'last full capacity:%s*(%d+) .*')
+        	i, j, capacity = string.find(infofile, 'design capacity:%s*(%d+) .*')
 		else
 			capacity = nil
 		end
@@ -70,22 +70,19 @@ end
 function update_linuxbatt()
 	local bat = get_linuxbatt()
 	local s = ""
-	local n = 0
 	local p = 0
 	for b, state in ipairs(bat) do
 		if state then
 			if s ~= "" then s = s .. "/" end
 			local perc = state[1];
 			s = s .. tostring(perc) .. state[2]
-		n = n + 1
 			p = p+perc
 		end
 	end
 	statusd.inform("linuxbatt", s)
-	local perc = p/n
-	if perc < settings.critical_threshold
+	if p < settings.critical_threshold
    	then print("linuxbatt_hint", "critical")
-   	elseif perc < settings.important_threshold
+   	elseif p < settings.important_threshold
    	then print("linuxbatt_hint", "important")
    	else print("linuxbatt_hint", "normal")
 	end
