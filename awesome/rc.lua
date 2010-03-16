@@ -60,7 +60,8 @@ end
 myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
-   { "restart", awesome.restart },
+   { "restart awesome", awesome.restart },
+--   { "restart ion3", awesome.exec("/usr/bin/X11/ion3") },
    { "quit", awesome.quit }
 }
 
@@ -78,7 +79,7 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- Create a textclock widget
 --mytextclock = awful.widget.textclock({ align = "right" })
 datewidget = widget({type = "textbox"})
-vicious.register(datewidget, vicious.widgets.date, " [ %R", 60)
+vicious.register(datewidget, vicious.widgets.date, " [ %a %b %d %R", 60)
 
 memwidget = widget({type = "textbox"})
 vicious.register(memwidget, vicious.widgets.mem, " || mem: $2MB/$3MB", 60)
@@ -186,7 +187,7 @@ for s = 1, screen.count() do
 		memwidget,
 		datewidget,
         s == 1 and mysystray or nil,
-        mytasklist[s],
+        -- mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
 end
@@ -216,7 +217,7 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show(true)        end),
+    awful.key({ modkey,           }, "F12", function () mymainmenu:show(true)        end),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
