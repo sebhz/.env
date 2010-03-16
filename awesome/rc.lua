@@ -78,10 +78,28 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- Create a textclock widget
 --mytextclock = awful.widget.textclock({ align = "right" })
 datewidget = widget({type = "textbox"})
-vicious.register(datewidget,  vicious.widgets.date, "%R", 60)
+vicious.register(datewidget, vicious.widgets.date, " [ %R", 60)
 
 memwidget = widget({type = "textbox"})
-vicious.register(memwidget,  vicious.widgets.mem, " || mem: $2MB/$3MB", 60)
+vicious.register(memwidget, vicious.widgets.mem, " || mem: $2MB/$3MB", 60)
+
+bat0widget = widget({type = "textbox"})
+vicious.register(bat0widget, vicious.widgets.bat, 
+	function (widget, args)
+		if tonumber(args[2]) < 10 then return ' || bat: <span color="red">' .. args[2] .. "(" .. args[1] .. ")"
+		else return " || bat: " .. args[2] .. "(" .. args[1] .. ")"
+		end
+	end, 60, "BAT0") 
+
+bat1widget = widget({type = "textbox"})
+vicious.register(bat1widget, vicious.widgets.bat, "/$2($1) || ", 60, "BAT1") 
+
+fswidget = widget({type = "textbox"})
+vicious.register(fswidget, vicious.widgets.fs, 
+	function (widget, args)
+		return "fs " .. args["{/ used_gb}"] .. "/" .. args["{/ size_gb}"] .. " ] "
+	end,
+	60)
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
@@ -156,6 +174,9 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         --mytextclock,
+		fswidget,
+		bat1widget,
+		bat0widget,
 		memwidget,
 		datewidget,
         s == 1 and mysystray or nil,
