@@ -1,6 +1,6 @@
 #!/bin/sh
 
 nm-applet &
-$HOME/Scripts/bg_slideshow /windows/data/wallpapers &
+$HOME/Scripts/bg_slideshow $HOME/Pictures &
 xscreensaver -no-splash &
 
