@@ -82,7 +82,7 @@ datewidget = widget({type = "textbox"})
 vicious.register(datewidget, vicious.widgets.date, " [ %a %b %d %R", 60)
 
 memwidget = widget({type = "textbox"})
-vicious.register(memwidget, vicious.widgets.mem, " || mem: $2MB/$3MB", 60)
+vicious.register(memwidget, vicious.widgets.mem, " || mem: $2MB/$3MB", 7)
 
 bat0widget = widget({type = "textbox"})
 vicious.register(bat0widget, vicious.widgets.bat, 
@@ -108,6 +108,21 @@ vicious.register(fswidget, vicious.widgets.fs,
 	end,
 	60)
 
+cpuwidget = widget({type = "textbox"})
+vicious.register(cpuwidget, vicious.widgets.cpu,
+	function (widget, args)
+		local t = ""
+		for i,j  in ipairs(args) do
+			if i ~= 1 then -- Very awkward
+				if t ~= "" then t = t .. " / CPU" .. i-1 .. ":" .. j
+				else t = " || CPU" .. i-1 .. ":".. j
+				end
+			end
+		end
+		return t
+	end,
+	5)
+ 
 -- Create a systray
 mysystray = widget({ type = "systray" })
 
@@ -185,6 +200,7 @@ for s = 1, screen.count() do
 		bat1widget,
 		bat0widget,
 		memwidget,
+		cpuwidget,
 		datewidget,
         s == 1 and mysystray or nil,
         -- mytasklist[s],
