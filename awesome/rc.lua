@@ -114,12 +114,12 @@ vicious.register(cpuwidget, vicious.widgets.cpu,
 		local t = ""
 		for i,j  in ipairs(args) do
 			if i ~= 1 then -- Very awkward
-				if t ~= "" then t = t .. " / "
-				else t = " || "
+				if t ~= "" then t = t .. "/"
+				else t = " || cpu: "
 				end
 
-				if tonumber(j) > 90 then t = t .. "CPU" .. i-1 .. ':<span color="red">' .. j .. "</span>"
-				else t = t .. "CPU" .. i-1 .. ":".. j
+				if tonumber(j) > 90 then t = t .. '<span color="red">' .. j .. "</span>"
+				else t = t .. j
 				end
 			end
 		end
