@@ -93,18 +93,17 @@ vicious.register(bat0widget, vicious.widgets.bat,
 	end, 60, "BAT0") 
 
 bat1widget = widget({type = "textbox"})
-
 vicious.register(bat1widget, vicious.widgets.bat, 
 	function (widget, args)
 		if tonumber(args[2]) < 30 then return '/<span color="red">' .. args[2] .. "</span>(" .. args[1] .. ") || "
-		else return "/" .. args[2] .. "(" .. args[1] .. ") || "
+		else return "/" .. args[2] .. "(" .. args[1] .. ")"
 		end
 	end, 60, "BAT1") 
 
 fswidget = widget({type = "textbox"})
 vicious.register(fswidget, vicious.widgets.fs, 
 	function (widget, args)
-		return "fs " .. args["{/ used_gb}"] .. "/" .. args["{/ size_gb}"] .. " ] "
+		return " || fs " .. args["{/ used_gb}"] .. "/" .. args["{/ size_gb}"] .. " ] "
 	end,
 	60)
 
@@ -127,6 +126,15 @@ vicious.register(cpuwidget, vicious.widgets.cpu,
 	end,
 	5)
  
+iowidget = widget({type = "textbox"})
+vicious.register(iowidget, vicious.widgets.dio,
+	function(widget, args)
+		local t = " || io: " .. tonumber(args["{read_mb}"]) .. "(r)/" .. tonumber(args["{write_mb}"]) .. "(w)"
+		return t
+	end,
+	5,
+	"sdb")
+	
 -- Create a systray
 mysystray = widget({ type = "systray" })
 
@@ -201,6 +209,7 @@ for s = 1, screen.count() do
         mylayoutbox[s],
         --mytextclock,
 		fswidget,
+		iowidget,
 		bat1widget,
 		bat0widget,
 		memwidget,
