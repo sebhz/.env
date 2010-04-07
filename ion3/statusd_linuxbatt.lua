@@ -24,7 +24,7 @@ local settings=table.join(statusd.get_config("linuxbatt"), defaults)
 function linuxbatt_do_find_capacity()
 	local c = {}
 
-	for n, bat in ipairs(settings.bat) do
+	for n, bat in pairs(settings.bat) do
         local f=io.open('/proc/acpi/battery/BAT'.. bat ..'/info')
 		local i, j, capacity
 		if f then
@@ -44,7 +44,7 @@ local capacity = linuxbatt_do_find_capacity()
 function get_linuxbatt()
 	local b = {}
 
-	for n, bat in ipairs(settings.bat) do
+	for n, bat in pairs(settings.bat) do
         local f=io.open('/proc/acpi/battery/BAT'.. bat ..'/state')
 		if f then
 			local statefile=f:read('*a')
@@ -71,7 +71,7 @@ function update_linuxbatt()
 	local bat = get_linuxbatt()
 	local s = ""
 	local p = 0
-	for b, state in ipairs(bat) do
+	for b, state in pairs(bat) do
 		if state then
 			if s ~= "" then s = s .. "/" end
 			local perc = state[1];
