@@ -17,7 +17,7 @@ require("debian.menu")
 beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "Eterm -O -0 --shade 80 --buttonbar 0 -L 1024"
+terminal = "gnome-terminal"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -87,16 +87,16 @@ vicious.register(memwidget, vicious.widgets.mem, " || mem: $2MB/$3MB", 7)
 bat0widget = widget({type = "textbox"})
 vicious.register(bat0widget, vicious.widgets.bat, 
 	function (widget, args)
-		if tonumber(args[2]) < 30 then return ' || bat: <span color="red">' .. args[2] .. "</span>(" .. args[1] .. ")"
-		else return " || bat: " .. args[2] .. "(" .. args[1] .. ")"
+		if tonumber(args[2]) < 30 then return ' || bat: <span color="red">' .. string.format("%3d",tonumber(args[2])) .. "</span>(" .. args[1] .. ")"
+		else return " || bat: " .. string.format("%3d", tonumber(args[2])) .. "(" .. args[1] .. ")"
 		end
 	end, 60, "BAT0") 
 
 bat1widget = widget({type = "textbox"})
 vicious.register(bat1widget, vicious.widgets.bat, 
 	function (widget, args)
-		if tonumber(args[2]) < 30 then return '/<span color="red">' .. args[2] .. "</span>(" .. args[1] .. ") || "
-		else return "/" .. args[2] .. "(" .. args[1] .. ")"
+		if tonumber(args[2]) < 30 then return '/<span color="red">' .. string.format("%3d", tonumber(args[2])) .. "</span>(" .. args[1] .. ")"
+		else return "/" .. string.format("%3d", tonumber(args[2])) .. "(" .. args[1] .. ")"
 		end
 	end, 60, "BAT1") 
 
@@ -116,9 +116,9 @@ vicious.register(cpuwidget, vicious.widgets.cpu,
 				if t ~= "" then t = t .. "/"
 				else t = " || cpu: "
 				end
-
-				if tonumber(j) > 90 then t = t .. '<span color="red">' .. j .. "</span>"
-				else t = t .. j
+				local v=tonumber(j)
+				if v > 90 then t = t .. '<span color="red">' .. string.format("%3d", j) .. "</span>"
+				else t = t .. string.format("%3d", j)
 				end
 			end
 		end
@@ -127,13 +127,28 @@ vicious.register(cpuwidget, vicious.widgets.cpu,
 	5)
  
 iowidget = widget({type = "textbox"})
-vicious.register(iowidget, vicious.widgets.dio,
-	function(widget, args)
-		local t = " || io: " .. tonumber(args["{read_mb}"]) .. "(r)/" .. tonumber(args["{write_mb}"]) .. "(w)"
-		return t
-	end,
-	5,
-	"sdb")
+
+local function mp2d (mp)
+    local f = io.popen("mount")
+
+    for line in f:lines() do -- Match: (size) (used)(avail)(use%) (mount)
+		local s = string.match(line, "/dev/([%a]+)%d on " .. mp .. " "); 
+		if s then return s end
+    end
+    f:close()
+	return nil
+end
+
+local rootfs_root = mp2d("/")
+if rootfs_root then
+	vicious.register(iowidget, vicious.widgets.dio,
+		function(widget, args)
+			local t = " || io: " .. string.format("%.2f",tonumber(args["{read_mb}"])) .. "(r)/" .. string.format("%.2f",tonumber(args["{write_mb}"])) .. "(w)"
+			return t
+		end,
+		5,
+		rootfs_root)
+end
 	
 -- Create a systray
 mysystray = widget({ type = "systray" })
