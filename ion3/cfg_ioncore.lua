@@ -65,8 +65,8 @@ defbindings("WScreen", {
     kpress(META.."F9", "ioncore.create_ws(_)"),
     
     bdoc("Display the main menu."),
-    kpress(ALTMETA.."F12", "mod_query.query_menu(_, _sub, 'mainmenu', 'Main menu:')"),
-    --kpress(ALTMETA.."F12", "mod_menu.menu(_, _sub, 'mainmenu', {big=true})"),
+    --kpress(META.."F12", "mod_query.query_menu(_, _sub, 'mainmenu', 'Main menu:')"),
+    kpress(META.."F12", "mod_menu.menu(_, _sub, 'mainmenu', {big=true})"),
     mpress("Button3", "mod_menu.pmenu(_, _sub, 'mainmenu')"),
     
     bdoc("Display the window list menu."),
@@ -137,19 +137,19 @@ defbindings("WMPlex.toplevel", {
     kpress(META.."T", "WRegion.set_tagged(_sub, 'toggle')", "_sub:non-nil"),
 
     bdoc("Query for manual page to be displayed."),
-    kpress(ALTMETA.."F1", "mod_query.query_man(_, ':man')"),
+    kpress(META.."F1", "mod_query.query_man(_, ':man')"),
 
     bdoc("Show the Ion manual page."),
-    kpress(META.."F1", "ioncore.exec_on(_, ':man ion3')"),
+    kpress(ALTMETA.."F1", "ioncore.exec_on(_, ':man ion3')"),
 
     bdoc("Run a terminal emulator."),
-    kpress(ALTMETA.."F2", "ioncore.exec_on(_, XTERM or 'x-terminal-emulator')"),
+    kpress(META.."F2", "ioncore.exec_on(_, XTERM or 'x-terminal-emulator')"),
     
     bdoc("Query for command line to execute."),
-    kpress(ALTMETA.."F3", "mod_query.query_exec(_)"),
+    kpress(META.."F3", "mod_query.query_exec(_)"),
 
     bdoc("Query for Lua code to execute."),
-    kpress(META.."F3", "mod_query.query_lua(_)"),
+    kpress(ALTMETA.."F3", "mod_query.query_lua(_)"),
 
     bdoc("Query for host to connect to with SSH."),
     kpress(ALTMETA.."F4", "mod_query.query_ssh(_, ':ssh')"),
@@ -163,7 +163,7 @@ defbindings("WMPlex.toplevel", {
            "mod_query.query_runfile(_, 'run-mailcap --action=view')"),
 
     bdoc("Query for workspace to go to or create a new one."),
-    kpress(ALTMETA.."F9", "mod_query.query_workspace(_)"),
+    kpress(META.."F9", "mod_query.query_workspace(_)"),
     
     bdoc("Query for a client window to go to."),
     kpress(META.."G", "mod_query.query_gotoclient(_)"),

@@ -17,10 +17,11 @@
 -- XFree86-based systems. The flying window keys are probably Mod3
 -- or Mod4; see the output of 'xmodmap'.
 META="Mod4+"
---ALTMETA=""
+ALTMETA="Mod1+Mod4+"
 
 -- Terminal emulator
-XTERM="Eterm -O -0 --shade 80 --buttonbar 0 -L 1024"
+-- XTERM="Eterm -O -0 --shade 80 --buttonbar 0 -L 1024"
+XTERM="gnome-terminal"
 
 -- Some basic settings
 ioncore.set{
@@ -92,7 +93,7 @@ dopath("cfg_defaults")
 -- of query-menus.
 
 defbindings("WScreen", {
-    kpress(ALTMETA.."F12", "mod_menu.menu(_, _sub, 'mainmenu', {big=true})"),
+    kpress(META.."F12", "mod_menu.menu(_, _sub, 'mainmenu', {big=true})"),
 })
 
 defbindings("WMPlex.toplevel", {
