@@ -80,11 +80,12 @@ function update_linuxbatt()
 		end
 	end
 	statusd.inform("linuxbatt", s)
-	if p < settings.critical_threshold
-   	then print("linuxbatt_hint", "critical")
-   	elseif p < settings.important_threshold
-   	then print("linuxbatt_hint", "important")
-   	else print("linuxbatt_hint", "normal")
+	if p < settings.critical_threshold then
+		statusd.inform("linuxbatt_hint", "critical")
+   	elseif p < settings.important_threshold then
+		statusd.inform("linuxbatt_hint", "important")
+   	else
+		statusd.inform("linuxbatt_hint", "normal")
 	end
 	linuxbatt_timer:set(settings.update_interval, update_linuxbatt)
  end
