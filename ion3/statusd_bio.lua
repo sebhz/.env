@@ -41,13 +41,25 @@ local function cal_to_jd(yr, mo, day, gregorian)
 	end
 end
 
+local function slope(t, period)
+	local derivative = math.cos(pi2*t/period)
+	if derivative < 0 then
+		return "-"
+	elseif derivative > 0 then
+		return "+"
+	else
+		return "="
+	end
+end
+
 local function biorhythm(jd_origin, jd_current)
-	local cycles = { 
-		physical = 23,
-		emotional = 28,
-		intellectual = 33,
-		intuitive = 38 };
-	
+	local bio = {
+		physical = {cycle = 23, abbr = "p" },
+		emotional = {cycle = 28, abbr = "e" },
+		intellectual = {cycle = 33, abbr = "i" },
+		intuitive = {cycle = 38, abbr = "n" }
+	}
+
 	if jd_current == nil then
 		local d = os.date("*t")
 		local fday = (d.hour*3600+d.min*60+d.sec)/seconds_per_day
@@ -56,19 +68,25 @@ local function biorhythm(jd_origin, jd_current)
 
 	local t = jd_current-jd_origin
 
-	local physical     = round(math.sin(pi2*t/cycles["physical"]), 2)
-	local emotional    = round(math.sin(pi2*t/cycles["emotional"]), 2)
-	local intellectual = round(math.sin(pi2*t/cycles["intellectual"]), 2)
-	local intuitive    = round(math.sin(pi2*t/cycles["intuitive"]), 2)
+	for i, v in pairs(bio) do
+		v.value = round(math.sin(pi2*t/v.cycle), 2)
+		v.slope = slope(t, v.cycle)
+	end
 
-    return physical, emotional, intellectual
+    return bio
 end
 
 local function update_bio()
-	local p, e, i = biorhythm(cal_to_jd(settings.year, settings.month, settings.day))
-	local bio_str = p.."/"..e.."/"..i
+	local bio = biorhythm(cal_to_jd(settings.year, settings.month, settings.day))
+
+	local bio_str = ""
+	local mean = 0
+	for i, v in pairs(bio) do
+		bio_str = bio_str..v.abbr..string.format("%.2f", v.value)..v.slope.." "
+		mean = mean + v.value
+	end
 	statusd.inform("bio", bio_str)
-	local mean = (p + e + i)/3
+	mean = mean / 4
 	if mean > settings.critical_threshold or mean < -settings.critical_threshold then
 		statusd.inform("bio_hint", "critical")
 	elseif mean > settings.important_threshold or mean < -settings.important_threshold then
