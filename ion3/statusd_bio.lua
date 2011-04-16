@@ -73,20 +73,28 @@ local function biorhythm(jd_origin, jd_current)
 		v.slope = slope(t, v.cycle)
 	end
 
-    return bio
+    return bio, 4
 end
 
 local function update_bio()
-	local bio = biorhythm(cal_to_jd(settings.year, settings.month, settings.day))
+	local bio, n = biorhythm(cal_to_jd(settings.year, settings.month, settings.day))
 
 	local bio_str = ""
+	local abb_str = ""
 	local mean = 0
+	local j = 0
 	for i, v in pairs(bio) do
-		bio_str = bio_str..v.abbr..string.format("%.2f", v.value)..v.slope.." "
+		abb_str = abb_str..v.abbr
+		bio_str = bio_str..string.format("%+.2f", v.value)..v.slope
+		if j < n-1 then
+			bio_str = bio_str.."/"
+		end
+		j = j + 1
 		mean = mean + v.value
 	end
-	statusd.inform("bio", bio_str)
-	mean = mean / 4
+
+	statusd.inform("bio", abb_str..": "..bio_str)
+	mean = mean / n
 	if mean > settings.critical_threshold or mean < -settings.critical_threshold then
 		statusd.inform("bio_hint", "critical")
 	elseif mean > settings.important_threshold or mean < -settings.important_threshold then

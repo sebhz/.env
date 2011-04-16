@@ -75,7 +75,7 @@ function update_linuxbatt()
 		if state then
 			if s ~= "" then s = s .. "/" end
 			local perc = state[1];
-			s = s .. tostring(perc) .. state[2]
+			s = s .. string.format("%3d", perc) .. state[2]
 			p = p+perc
 		end
 	end
