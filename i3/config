@@ -16,6 +16,9 @@ set $META Mod4
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 font -*-helvetica-medium-r-normal-*-10-*-*-*-*-*-*-*
 
+# use tabbed layout by default
+workspace_layout	tabbed
+
 # use Mouse+$META to drag floating windows to their wanted position
 floating_modifier $META
 
@@ -51,7 +54,7 @@ bindsym $META+Return fullscreen
 
 # change container layout (stacked, tabbed, default)
 bindsym $META+s layout stacking
-bindsym $META+w layout tabbed
+bindsym $META+t layout tabbed
 bindsym $META+e layout default
 
 # toggle tiling / floating
