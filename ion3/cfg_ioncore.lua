@@ -34,8 +34,8 @@ defbindings("WScreen", {
     kpress(META.."0", "WScreen.switch_nth(_, 9)"),
     
     bdoc("Switch to next/previous object within current screen."),
-    kpress(META.."comma", "WScreen.switch_prev(_)"),
-    kpress(META.."period", "WScreen.switch_next(_)"),
+    kpress(META.."Shift+Left", "WScreen.switch_prev(_)"),
+    kpress(META.."Shift+Right", "WScreen.switch_next(_)"),
 
     submap(META.."K", {
         bdoc("Go to first region demanding attention or previously active one."),
@@ -52,14 +52,6 @@ defbindings("WScreen", {
         bdoc("Clear all tags."),
         kpress("T", "ioncore.tagged_clear()"),
     }),
-
-    bdoc("Go to n:th screen on multihead setup."),
-    kpress(META.."Shift+1", "ioncore.goto_nth_screen(0)"),
-    kpress(META.."Shift+2", "ioncore.goto_nth_screen(1)"),
-    
-    bdoc("Go to next/previous screen on multihead setup."),
-    kpress(META.."Shift+comma", "ioncore.goto_prev_screen()"),
-    kpress(META.."Shift+period", "ioncore.goto_next_screen()"),
     
     bdoc("Create a new workspace of chosen default type."),
     kpress(META.."F9", "ioncore.create_ws(_)"),
