@@ -164,14 +164,14 @@ defbindings("WMPlex.toplevel", {
     --kpress(META.."M", "mod_menu.menu(_, _sub, 'ctxmenu')"),
     kpress(META.."M", "mod_query.query_menu(_, _sub, 'ctxmenu', 'Context menu:')"),
     
-    submap(META.."K", {
+--    submap(META.."K", {
         bdoc("Detach (float) or reattach an object to its previous location."),
         -- By using _chld instead of _sub, we can detach/reattach queries
         -- attached to a group. The detach code checks if the parameter 
         -- (_chld) is a group 'bottom' and detaches the whole group in that
         -- case.
-        kpress("D", "ioncore.detach(_chld, 'toggle')", "_chld:non-nil"),
-    }),
+        kpress(META.."D", "ioncore.detach(_chld, 'toggle')", "_chld:non-nil"),
+--    }),
 })
 
 
