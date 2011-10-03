@@ -185,7 +185,7 @@ powerprompt     # This is the default prompt -- might be slow.
 # examples.
 #
 #===============================================================
-source .my_aliases
+source $HOME/.my_aliases
 
 #-------------------------------------------------------------
 # Make the following commands run in background automatically:
