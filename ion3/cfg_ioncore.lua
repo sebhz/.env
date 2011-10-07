@@ -34,8 +34,8 @@ defbindings("WScreen", {
     kpress(META.."0", "WScreen.switch_nth(_, 9)"),
     
     bdoc("Switch to next/previous object within current screen."),
-    kpress(META.."Shift+Left", "WScreen.switch_prev(_)"),
-    kpress(META.."Shift+Right", "WScreen.switch_next(_)"),
+    kpress(META.."Left", "WScreen.switch_prev(_)"),
+    kpress(META.."Right", "WScreen.switch_next(_)"),
 
     submap(META.."K", {
         bdoc("Go to first region demanding attention or previously active one."),
