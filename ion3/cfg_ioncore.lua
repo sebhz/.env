@@ -325,7 +325,7 @@ defmenu("mainmenu", {
     menuentry("Lock screen",
               "ioncore.exec_on(_, ioncore.lookup_script('ion-lock'))"),
     menuentry("Help",           "mod_query.query_man(_)"),
-    menuentry("About Ion",      "mod_query.show_about_ion(_)"),
+    menuentry("About Notion",   "mod_query.show_about_ion(_)"),
     submenu("Styles",           "stylemenu"),
     submenu("Debian",           "Debian"),
     submenu("Session",          "sessionmenu"),
