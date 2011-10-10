@@ -82,6 +82,12 @@ defbindings("WScreen", {
                "_chld:non-nil"),
     }),
 
+	bdoc("Restart Notion."),
+	kpress(META.."Shift+R", "ioncore.restart()"),
+
+	bdoc("Exit Notion."),
+	kpress(META.."Shift+Q", "ioncore.shutdown()"),
+
 })
 
 
@@ -286,30 +292,18 @@ defbindings("WMoveresMode", {
     kpress("Right", "WMoveresMode.resize(_, 0, 1, 0, 0)"),
     kpress("Up",    "WMoveresMode.resize(_, 0, 0, 1, 0)"),
     kpress("Down",  "WMoveresMode.resize(_, 0, 0, 0, 1)"),
-    kpress("F",     "WMoveresMode.resize(_, 1, 0, 0, 0)"),
-    kpress("B",     "WMoveresMode.resize(_, 0, 1, 0, 0)"),
-    kpress("P",     "WMoveresMode.resize(_, 0, 0, 1, 0)"),
-    kpress("N",     "WMoveresMode.resize(_, 0, 0, 0, 1)"),
     
     bdoc("Shrink in specified direction."),
     kpress("Shift+Left",  "WMoveresMode.resize(_,-1, 0, 0, 0)"),
     kpress("Shift+Right", "WMoveresMode.resize(_, 0,-1, 0, 0)"),
     kpress("Shift+Up",    "WMoveresMode.resize(_, 0, 0,-1, 0)"),
     kpress("Shift+Down",  "WMoveresMode.resize(_, 0, 0, 0,-1)"),
-    kpress("Shift+F",     "WMoveresMode.resize(_,-1, 0, 0, 0)"),
-    kpress("Shift+B",     "WMoveresMode.resize(_, 0,-1, 0, 0)"),
-    kpress("Shift+P",     "WMoveresMode.resize(_, 0, 0,-1, 0)"),
-    kpress("Shift+N",     "WMoveresMode.resize(_, 0, 0, 0,-1)"),
     
     bdoc("Move in specified direction."),
     kpress(META.."Left",  "WMoveresMode.move(_,-1, 0)"),
     kpress(META.."Right", "WMoveresMode.move(_, 1, 0)"),
     kpress(META.."Up",    "WMoveresMode.move(_, 0,-1)"),
     kpress(META.."Down",  "WMoveresMode.move(_, 0, 1)"),
-    kpress(META.."F",     "WMoveresMode.move(_,-1, 0)"),
-    kpress(META.."B",     "WMoveresMode.move(_, 1, 0)"),
-    kpress(META.."P",     "WMoveresMode.move(_, 0,-1)"),
-    kpress(META.."N",     "WMoveresMode.move(_, 0, 1)"),
 })
 
 
