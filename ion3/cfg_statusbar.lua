@@ -2,13 +2,26 @@
 -- Ion statusbar module configuration file
 -- 
 local template
+local battmon_string = ""
+local mocmon_string = ""
+
 local _f=io.open('/proc/acpi/battery/BAT0/info')
 if _f then
-    template="[ %date || load: %load || mem: %meminfo_mem_used/%meminfo_mem_total || batt: %linuxbatt || %df || %uptime || %workspace_pager (%workspace_name) ] %filler%systray"
+	batmon_string = "batt: %linuxbatt ||"
 	_f:close()
-else
-    template="[ %date || load: %load || mem: %meminfo_mem_used/%meminfo_mem_total || %df || %uptime || %workspace_pager (%workspace_name) ] %filler%systray"
 end
+
+-- Crude way of checking if moc is there
+-- but I could not find a better one
+_f=io.popen("which mocp")
+local _l = _f:read("*a")
+_f:close()
+
+if _l ~= "" then
+	mocmon_string = " || moc: %mocmon_user"
+end
+
+template="[ %date || load: %load || mem: %meminfo_mem_used/%meminfo_mem_total || " .. batmon_string .. "%df || %uptime || %workspace_pager (%workspace_name)" .. mocmon_string .. " ] %filler%systray"
 
 -- Create a statusbar
 mod_statusbar.create {
@@ -116,5 +129,11 @@ mod_statusbar.launch_statusd{
 	workspace = {
 	},
 
+	mocmon = {
+		interval = 2 * 1000,
+		user_format = "%songtitle% - %artist%",
+		not_running = "stopped",
+		do_monitors = false,
+	}
 }
 
