@@ -7,7 +7,7 @@ local mocmon_string = ""
 
 local _f=io.open('/proc/acpi/battery/BAT0/info')
 if _f then
-	batmon_string = "batt: %linuxbatt ||"
+	battmon_string = "batt: %linuxbatt ||"
 	_f:close()
 end
 
@@ -21,7 +21,7 @@ if _l ~= "" then
 	mocmon_string = " || moc: %mocmon_user"
 end
 
-template="[ %date || load: %load || mem: %meminfo_mem_used/%meminfo_mem_total || " .. batmon_string .. "%df || %uptime || %workspace_pager (%workspace_name)" .. mocmon_string .. " ] %filler%systray"
+template="[ %date || load: %load || mem: %meminfo_mem_used/%meminfo_mem_total || " .. battmon_string .. "%df || %uptime || %workspace_pager (%workspace_name)" .. mocmon_string .. " ] %filler%systray"
 
 -- Create a statusbar
 mod_statusbar.create {
