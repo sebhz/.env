@@ -1,0 +1,14 @@
+[core]
+	editor = vim
+
+[user]
+	name = sebhz
+	email = seb.haezebrouck@free.fr
+
+[color]
+	ui = auto
+	diff = auto
+	status = auto
+	branch = auto
+	log = auto
+
