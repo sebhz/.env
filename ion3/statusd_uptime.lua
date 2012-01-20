@@ -29,10 +29,11 @@ local function get_uptime_info()
     local s=f:read('*line')
     f:close()
 
-    s = string.gsub(s, ", +%d+ user.+", "")    -- unnecessary
-    s = string.gsub(s, "%d+:%d+:%d+ up +", "") -- time is unnecessary
-
-    statusd.inform("uptime", s)
+	if (s) then
+	    s = string.gsub(s, ", +%d+ user.+", "")    -- unnecessary
+		s = string.gsub(s, "%d+:%d+:%d+ up +", "") -- time is unnecessary
+	    statusd.inform("uptime", s)
+	end
 end
 
 --

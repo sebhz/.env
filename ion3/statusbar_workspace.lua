@@ -60,7 +60,10 @@ end
 
 local function update_workspace()
     local scr=ioncore.find_screen_id(0)
-    local curws = scr:mx_current()
+    local curws
+	if scr then
+		curws = scr:mx_current()
+	end
     local wstype, c
     local pager=""
     local name_pager=""
@@ -100,9 +103,11 @@ local function update_workspace()
 
     ioncore.defer( function()
 	mod_statusbar.inform('workspace_pager', pager)
-	mod_statusbar.inform('workspace_name', curws:name())
-        mod_statusbar.inform('workspace_name_pager', name_pager)
-        mod_statusbar.inform('workspace_num_name_pager', name_pager_plus)
+	if curws then
+		mod_statusbar.inform('workspace_name', curws:name())
+	end
+    mod_statusbar.inform('workspace_name_pager', name_pager)
+    mod_statusbar.inform('workspace_num_name_pager', name_pager_plus)
 	mod_statusbar.update()
     end)
 end
