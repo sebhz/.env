@@ -1,4 +1,1 @@
-defwinprop {
-	class="MPlayer",
-	float=true,
-}
+../ion3/cfg_kludges.lua
