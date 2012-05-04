@@ -185,9 +185,9 @@ powerprompt     # This is the default prompt -- might be slow.
 # examples.
 #
 #===============================================================
-if [ -e $HOME/.my_bash_aliases ] 
+if [ -e $HOME/.bash_aliases ]
 then
-	source $HOME/.my_bash_aliases
+	source $HOME/.bash_aliases
 fi
 
 #-------------------------------------------------------------
