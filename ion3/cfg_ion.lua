@@ -16,11 +16,21 @@
 -- Set default modifiers. Alt should usually be mapped to Mod1 on
 -- XFree86-based systems. The flying window keys are probably Mod3
 -- or Mod4; see the output of 'xmodmap'.
-META="Mod4+"
-ALTMETA="Mod1+Mod4+"
+local os_meta=os.getenv("NOTION_MOD")
+if os_meta == nil then
+	os_meta="Mod4"
+end
+META=os_meta .. "+"
+ALTMETA=os_meta .. "+Shift+"
 
 -- Terminal emulator
-XTERM="xterm -fg darkgrey -bg black -sb -sl 1024"
+local os_term=os.getenv("NOTION_TERM")
+if os_term == nil then
+	os_term = "xterm -fg darkgrey -bg black -sb -sl 1024"
+end
+XTERM=os_term
+-- XTERM="terminator"
+-- XTERM="xterm -fg darkgrey -bg black -sb -sl 1024"
 -- XTERM="Eterm -O -0 --shade 80 --buttonbar 0 -L 1024"
 -- XTERM="gnome-terminal"
 
@@ -41,10 +51,10 @@ ioncore.set{
     -- Movement commands warp the pointer to frames instead of just
     -- changing focus. Enabled by default.
     --warp=true,
-    
+
     -- Switch frames to display newly mapped windows
     switchto=true,
-    
+
     -- Default index for windows in frames: one of 'last', 'next' (for
     -- after current), or 'next-act' (for after current and anything with
     -- activity right after it).
@@ -53,7 +63,7 @@ ioncore.set{
 
     -- Auto-unsqueeze transients/menus/queries.
     --unsqueeze=true,
-    
+
     -- Display notification tooltips for activity on hidden workspace.
     --screen_notify=true,
 }
