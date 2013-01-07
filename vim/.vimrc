@@ -22,9 +22,11 @@ set whichwrap=b,s,h,l,<,>,[,]   " move freely between files
 
 set noautoindent
 set nosmartindent
-set nocindent  
+set nocindent
 
-" Somehow this seems to be need when working with Eterm
+let c_space_errors = 1
+
+" Somehow this seems to be needed when working with Eterm
 if &term == "Eterm"
 	set t_kb=
 	fixdel
@@ -36,4 +38,9 @@ set t_Co=256
 syntax on           " syntax highlighing
 set background=dark " adapt colors for background
 colors peaksea
+
+" Extra whitespaces highlighting
+" Highlight trailing whitespaces and spaces followed by tabs
+highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 
