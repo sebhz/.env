@@ -44,7 +44,7 @@ local defaults = {
    separator = " ",
    update_interval = 1000, -- 1 second
 }
-                
+
 local settings = table.join(statusd.get_config("df"), defaults)
 
 local df_timer = statusd.create_timer()
@@ -72,6 +72,7 @@ local function get_df()
    f:read("*line") -- skip header line
    local s = f:read("*a")
    f:close()
+   if (s == nil) then return nil end
    local i = 0
    while (i < string.len(s)) do
       local j, fsname, fssize, fsused, fsavail, fsusedp, mpoint
@@ -113,4 +114,3 @@ end
 update_df()
 
 -- EOF
-

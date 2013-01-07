@@ -74,14 +74,14 @@ mod_statusbar.launch_statusd{
         -- Locale date format (usually shows seconds, which would require
         -- updating rather often and can be distracting)
         --date_format='%c',
-        
+
         -- Additional date formats. 
         --[[ 
         formats={ 
             time = '%H:%M', -- %date_time
         }
         --]]
-    },      
+    },
 
     -- Load meter
     load={
@@ -116,16 +116,17 @@ mod_statusbar.launch_statusd{
     },
 
 	df = {
-   		template = "%mpoint: %used/%size",
-		update_interval = 5000,
+		fslist = { "/home" },
+		template = "%mpoint: %used/%size (%usedp)",
+		update_interval = 5*1000,
 	},
 
 	bio = {
 	},
-	
+
 	uptime = {
 	},
-	
+
 	workspace = {
 	},
 
