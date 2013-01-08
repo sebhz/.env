@@ -46,7 +46,7 @@
 
 local function update_frame()
     local fr
-    ioncore.defer( function() 
+    ioncore.defer( function()
 	local cur=ioncore.current()
 	if obj_is(cur, "WClientWin") and
 	  obj_is(cur:parent(), "WMPlex") then
@@ -63,7 +63,10 @@ local function update_workspace()
     local curws
 	if scr then
 		curws = scr:mx_current()
+	else
+		return nil
 	end
+
     local wstype, c
     local pager=""
     local name_pager=""
