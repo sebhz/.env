@@ -37,7 +37,6 @@
 
 --------------------------------------------------------------------------------
 
-
 local defaults = {
    template = "[%mpoint: %avail (%availp) free]",
    fslist = { "/" },
@@ -75,40 +74,41 @@ local function get_df()
    if (s == nil) then return nil end
    local i = 0
    while (i < string.len(s)) do
-      local j, fsname, fssize, fsused, fsavail, fsusedp, mpoint
-      i, j, fsname, fssize, fsused, fsavail, fsusedp, mpoint
-= string.find(s, "(/%S+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%%?%s(%S+)\n",
-i)
-    if (i == nil) then break end
-      df_table[mpoint] = { mpoint=mpoint,
-fs=fsname,
-size=guess_mem_unit(tonumber(fssize)),
-used=guess_mem_unit(tonumber(fsused)),
-avail=guess_mem_unit(tonumber(fsavail)),
-usedp=tonumber(fsusedp),
-availp=((100 - tonumber(fsusedp)) .. "%") }
-      i = j+1
+       local j, fsname, fssize, fsused, fsavail, fsusedp, mpoint
+       i, j, fsname, fssize, fsused, fsavail, fsusedp, mpoint
+         = string.find(s, "(/%S+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%%?%s(%S+)\n", i)
+       if (i == nil) then break end
+       df_table[mpoint] = { mpoint=mpoint,
+                            fs=fsname,
+                            size=guess_mem_unit(tonumber(fssize)),
+                            used=guess_mem_unit(tonumber(fsused)),
+                            avail=guess_mem_unit(tonumber(fsavail)),
+                            usedp=tonumber(fsusedp),
+                            availp=((100 - tonumber(fsusedp)) .. "%") }
+       i = j+1
    end
    return df_table
 end
 
 local function update_df()
-   local t = get_df()
-   if (t == nil) then return nil end
-   local df_str = ""
-   for i=1, #settings.fslist do
-      local s = string.gsub(settings.template, "%%(%w+)",
-function (arg)
-if (t[settings.fslist[i]] ~= nil) then
-return t[settings.fslist[i]][arg]
-end
-return nil
-end)
-      df_str = df_str .. settings.separator .. s
-   end
-   df_str = string.sub(df_str, #settings.separator + 1)
-   statusd.inform("df", df_str)
-   df_timer:set(settings.update_interval, update_df)
+    local t = get_df()
+
+    if (t ~= nil) then
+        local df_str = ""
+        for i=1, #settings.fslist do
+            local s = string.gsub(settings.template, "%%(%w+)",
+                                  function (arg)
+                                      if (t[settings.fslist[i]] ~= nil) then
+                                          return t[settings.fslist[i]][arg]
+                                      end
+                                      return nil
+                                  end)
+            df_str = df_str .. settings.separator .. s
+        end
+        df_str = string.sub(df_str, #settings.separator + 1)
+        statusd.inform("df", df_str)
+    end
+    df_timer:set(settings.update_interval, update_df)
 end
 
 update_df()

@@ -2,13 +2,11 @@
 -- Ion core configuration file
 --
 
-
 -- 
 -- Bindings. This includes global bindings and bindings common to
 -- screens and all types of frames only. See modules' configuration 
 -- files for other bindings.
 --
-
 
 -- WScreen context bindings
 --
@@ -32,7 +30,7 @@ defbindings("WScreen", {
     kpress(META.."8", "WScreen.switch_nth(_, 7)"),
     kpress(META.."9", "WScreen.switch_nth(_, 8)"),
     kpress(META.."0", "WScreen.switch_nth(_, 9)"),
-    
+
     bdoc("Switch to next/previous object within current screen."),
     kpress(META.."Left", "WScreen.switch_prev(_)"),
     kpress(META.."Right", "WScreen.switch_next(_)"),
@@ -45,49 +43,60 @@ defbindings("WScreen", {
 
         --bdoc("Go to previous active object."),
         --kpress("K", "ioncore.goto_previous()"),
-        
+
         --bdoc("Go to first object on activity/urgency list."),
         --kpress("I", "ioncore.goto_activity()"),
-        
+
         bdoc("Clear all tags."),
         kpress("T", "ioncore.tagged_clear()"),
     }),
-    
+
     bdoc("Create a new workspace of chosen default type."),
     kpress(META.."F9", "ioncore.create_ws(_)"),
-    
+
     bdoc("Display the main menu."),
     --kpress(META.."F12", "mod_query.query_menu(_, _sub, 'mainmenu', 'Main menu:')"),
     kpress(META.."F12", "mod_menu.menu(_, _sub, 'mainmenu', {big=true})"),
     mpress("Button3", "mod_menu.pmenu(_, _sub, 'mainmenu')"),
-    
+
     bdoc("Display the window list menu."),
     mpress("Button2", "mod_menu.pmenu(_, _sub, 'windowlist')"),
 
-    bdoc("Forward-circulate focus."),
+    bdoc("Circulate focus."),
     -- '_chld' used here stands to for an actual child window that may not
     -- be managed by the screen itself, unlike '_sub', that is likely to be
-    -- the managing group of that window. The right/left directions are
+    -- the managing group of that window. The up/down/right/left directions are
     -- used instead of next/prev, because they work better in conjunction
     -- with tilings.
-    kpress(META.."Tab", "ioncore.goto_next(_chld, 'right')", 
-           "_chld:non-nil"),
-    submap(META.."K", { 
-        bdoc("Backward-circulate focus."),
-        kpress("AnyModifier+Tab", "ioncore.goto_next(_chld, 'left')", 
+    submap(META.."W", {
+        kpress("Right", "ioncore.goto_next(_chld, 'right')",
+                "_chld:non-nil"),
+        kpress("Left", "ioncore.goto_next(_chld, 'left')",
                "_chld:non-nil"),
-        
-        bdoc("Raise focused object, if possible."),
+        kpress("Up", "ioncore.goto_next(_chld, 'up')",
+               "_chld:non-nil"),
+        kpress("Down", "ioncore.goto_next(_chld, 'down')",
+               "_chld:non-nil"),
         kpress("AnyModifier+R", "WRegion.rqorder(_chld, 'front')",
                "_chld:non-nil"),
     }),
 
 	bdoc("Restart Notion."),
-	kpress(META.."Shift+R", "ioncore.restart()"),
+	kpress(META.."Shift+R", "notioncore.restart()"),
 
 	bdoc("Exit Notion."),
-	kpress(META.."Shift+Q", "ioncore.shutdown()"),
+	kpress(META.."Shift+Q", "notioncore.shutdown()"),
 
+	-- OK, should not belong to the window manager - but this is too tempting
+	bdoc("Volume up."),
+	kpress(META.."equal", "ioncore.exec_on(_, 'amixer --quiet set Master 1+')"),
+	bdoc("Volume down."),
+	kpress(META.."minus", "ioncore.exec_on(_, 'amixer --quiet set Master 1-')"),
+
+    submap(META.."K", {
+		bdoc("Screen capture"),
+        kpress("X", "ioncore.exec_on(_, 'import -window root root.png')"),
+	}),
 })
 
 
@@ -99,11 +108,11 @@ defbindings("WClientWin", {
     bdoc("Nudge the client window. This might help with some "..
          "programs' resizing problems."),
     kpress_wait(META.."L", "WClientWin.nudge(_)"),
-    
+
     submap(META.."K", {
        bdoc("Kill client owning the client window."),
        kpress("C", "WClientWin.kill(_)"),
-       
+
        bdoc("Send next key press to the client window. "..
             "Some programs may not allow this by default."),
        kpress("Q", "WClientWin.quote_next(_)"),
@@ -142,7 +151,7 @@ defbindings("WMPlex.toplevel", {
 
     bdoc("Run a terminal emulator."),
     kpress(META.."F2", "ioncore.exec_on(_, XTERM or 'x-terminal-emulator')"),
-    
+
     bdoc("Query for command line to execute."),
     kpress(META.."F3", "mod_query.query_exec(_)"),
 
@@ -153,23 +162,23 @@ defbindings("WMPlex.toplevel", {
     kpress(ALTMETA.."F4", "mod_query.query_ssh(_, ':ssh')"),
 
     bdoc("Query for file to edit."),
-    kpress(ALTMETA.."F5", 
+    kpress(ALTMETA.."F5",
            "mod_query.query_editfile(_, 'run-mailcap --action=edit')"),
 
     bdoc("Query for file to view."),
-    kpress(ALTMETA.."F6", 
+    kpress(ALTMETA.."F6",
            "mod_query.query_runfile(_, 'run-mailcap --action=view')"),
 
     bdoc("Query for workspace to go to or create a new one."),
     kpress(META.."F9", "mod_query.query_workspace(_)"),
-    
+
     bdoc("Query for a client window to go to."),
     kpress(META.."G", "mod_query.query_gotoclient(_)"),
-    
+
     bdoc("Display context menu."),
     --kpress(META.."M", "mod_menu.menu(_, _sub, 'ctxmenu')"),
     kpress(META.."M", "mod_query.query_menu(_, _sub, 'ctxmenu', 'Context menu:')"),
-    
+
 --    submap(META.."K", {
         bdoc("Detach (float) or reattach an object to its previous location."),
         -- By using _chld instead of _sub, we can detach/reattach queries
@@ -192,28 +201,28 @@ defbindings("WFrame", {
         kpress("H", "WFrame.maximize_horiz(_)"),
         kpress("V", "WFrame.maximize_vert(_)"),
     }),
-    
+
     bdoc("Display context menu."),
     mpress("Button3", "mod_menu.pmenu(_, _sub, 'ctxmenu')"),
-    
+
     bdoc("Begin move/resize mode."),
     kpress(META.."R", "WFrame.begin_kbresize(_)"),
-    
+
     bdoc("Switch the frame to display the object indicated by the tab."),
     mclick("Button1@tab", "WFrame.p_switch_tab(_)"),
     mclick("Button2@tab", "WFrame.p_switch_tab(_)"),
-    
+
     bdoc("Resize the frame."),
     mdrag("Button1@border", "WFrame.p_resize(_)"),
     mdrag(META.."Button3", "WFrame.p_resize(_)"),
-    
+
     bdoc("Move the frame."),
     mdrag(META.."Button1", "WFrame.p_move(_)"),
-    
+
     bdoc("Move objects between frames by dragging and dropping the tab."),
     mdrag("Button1@tab", "WFrame.p_tabdrag(_)"),
     mdrag("Button2@tab", "WFrame.p_tabdrag(_)"),
-           
+
 })
 
 -- Frames for transient windows ignore this bindmap
@@ -221,11 +230,11 @@ defbindings("WFrame", {
 defbindings("WFrame.toplevel", {
     bdoc("Query for a client window to attach."),
     kpress(META.."A", "mod_query.query_attachclient(_)"),
-    
+
     submap(META.."K", {
         -- Display tab numbers when modifiers are released
         submap_wait("ioncore.tabnum.show(_)"),
-        
+
         bdoc("Switch to n:th object within the frame."),
         kpress("1", "WFrame.switch_nth(_, 0)"),
         kpress("2", "WFrame.switch_nth(_, 1)"),
@@ -237,15 +246,15 @@ defbindings("WFrame.toplevel", {
         kpress("8", "WFrame.switch_nth(_, 7)"),
         kpress("9", "WFrame.switch_nth(_, 8)"),
         kpress("0", "WFrame.switch_nth(_, 9)"),
-        
+
         bdoc("Switch to next/previous object within the frame."),
         kpress("N", "WFrame.switch_next(_)"),
         kpress("P", "WFrame.switch_prev(_)"),
-        
+
         bdoc("Move current object within the frame left/right."),
         kpress("comma", "WFrame.dec_index(_, _sub)", "_sub:non-nil"),
         kpress("period", "WFrame.inc_index(_, _sub)", "_sub:non-nil"),
-               
+
         bdoc("Maximize the frame horizontally/vertically."),
         kpress("H", "WFrame.maximize_horiz(_)"),
         kpress("V", "WFrame.maximize_vert(_)"),
@@ -260,15 +269,15 @@ defbindings("WFrame.toplevel", {
 defbindings("WFrame.floating", {
     bdoc("Toggle shade mode"),
     mdblclick("Button1@tab", "WFrame.set_shaded(_, 'toggle')"),
-    
+
     bdoc("Raise the frame."),
     mpress("Button1@tab", "WRegion.rqorder(_, 'front')"),
     mpress("Button1@border", "WRegion.rqorder(_, 'front')"),
     mclick(META.."Button1", "WRegion.rqorder(_, 'front')"),
-    
+
     bdoc("Lower the frame."),
     mclick(META.."Button3", "WRegion.rqorder(_, 'back')"),
-    
+
     bdoc("Move the frame."),
     mdrag("Button1@tab", "WFrame.p_move(_)"),
 })
@@ -292,13 +301,13 @@ defbindings("WMoveresMode", {
     kpress("Right", "WMoveresMode.resize(_, 0, 1, 0, 0)"),
     kpress("Up",    "WMoveresMode.resize(_, 0, 0, 1, 0)"),
     kpress("Down",  "WMoveresMode.resize(_, 0, 0, 0, 1)"),
-    
+
     bdoc("Shrink in specified direction."),
     kpress("Shift+Left",  "WMoveresMode.resize(_,-1, 0, 0, 0)"),
     kpress("Shift+Right", "WMoveresMode.resize(_, 0,-1, 0, 0)"),
     kpress("Shift+Up",    "WMoveresMode.resize(_, 0, 0,-1, 0)"),
     kpress("Shift+Down",  "WMoveresMode.resize(_, 0, 0, 0,-1)"),
-    
+
     bdoc("Move in specified direction."),
     kpress(META.."Left",  "WMoveresMode.move(_,-1, 0)"),
     kpress(META.."Right", "WMoveresMode.move(_, 1, 0)"),
@@ -328,10 +337,10 @@ defmenu("mainmenu", {
 
 -- Session control menu
 defmenu("sessionmenu", {
-    menuentry("Save",           "ioncore.snapshot()"),
-    menuentry("Restart",        "ioncore.restart()"),
-    menuentry("Restart TWM",    "ioncore.restart_other('twm')"),
-    menuentry("Exit",           "ioncore.shutdown()"),
+    menuentry("Save",           "notioncore.snapshot()"),
+    menuentry("Restart",        "notioncore.restart()"),
+    menuentry("Restart TWM",    "notioncore.restart_other('twm')"),
+    menuentry("Exit",           "notioncore.shutdown()"),
 })
 
 
@@ -351,7 +360,7 @@ defctxmenu("WFrame", "Frame", {
 -- Context menu for groups (workspaces, client windows)
 defctxmenu("WGroup", "Group", {
     menuentry("Toggle tag",     "WRegion.set_tagged(_, 'toggle')"),
-    menuentry("De/reattach",    "ioncore.detach(_, 'toggle')"), 
+    menuentry("De/reattach",    "ioncore.detach(_, 'toggle')"),
 })
 
 

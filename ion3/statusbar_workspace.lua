@@ -58,20 +58,21 @@ local function update_frame()
     end)
 end
 
-local function update_workspace()
+local function update_workspace(region, action)
     local scr=ioncore.find_screen_id(0)
-    local curws
-	if scr then
-		curws = scr:mx_current()
-	else
-		return nil
-	end
+	if not scr then return nil end
+
+	local curws = scr:mx_current()
+	if not curws then return nil end
 
     local wstype, c
     local pager=""
     local name_pager=""
     local name_pager_plus=""
-    local curindex = scr:get_index(curws)+1
+    local curindex = scr:get_index(curws)
+	if not curindex then return nil end
+	curindex = curindex+1
+
     n = scr:mx_count(1)
     for i=1,n do
         tmpws=scr:mx_nth(i-1)

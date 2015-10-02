@@ -19,7 +19,7 @@ set modelines=3     " number lines checked for modelines
 set shortmess=atI   " Abbreviate messages
 set nostartofline   " don't jump to first character when paging
 set whichwrap=b,s,h,l,<,>,[,]   " move freely between files
-
+" 
 set noautoindent
 set nosmartindent
 set nocindent
@@ -42,5 +42,27 @@ colors peaksea
 " Extra whitespaces highlighting
 " Highlight trailing whitespaces and spaces followed by tabs
 highlight ExtraWhitespace ctermbg=red guibg=red
-autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
+augroup extra_ws
+	autocmd!
+	autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
+augroup END
+
+" Expand tabs for java
+augroup java_setting
+	autocmd!
+	autocmd FileType java setlocal expandtab
+augroup END
+
+" Commenting blocks of code.
+augroup block_comment
+	autocmd!
+	autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
+	autocmd FileType sh,ruby,python   let b:comment_leader = '# '
+	autocmd FileType conf,fstab       let b:comment_leader = '# '
+	autocmd FileType tex              let b:comment_leader = '% '
+	autocmd FileType mail             let b:comment_leader = '> '
+	autocmd FileType vim              let b:comment_leader = '" '
+augroup END
+noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
+noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
 

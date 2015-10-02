@@ -1,3 +1,5 @@
+-- Automatically close empty frames when the last 
+-- client is killed
 local function close_empty_frame(ftable)
     if ftable.mode ~= 'remove' then return end
     local wmp = ftable.reg

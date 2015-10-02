@@ -75,26 +75,27 @@ ioncore.set{
 -- the the modules or configuration files that you want, below.
 -- The modules' configuration files correspond to the names of the 
 -- modules with 'mod' replaced by 'cfg'.
-dopath("cfg_defaults")
+-- dopath("cfg_defaults")
 
 -- Load configuration of the Ion 'core'. Most bindings are here.
---dopath("cfg_ioncore")
+dopath("cfg_notioncore")
 
 -- Load some kludges to make apps behave better.
---dopath("cfg_kludges")
+dopath("cfg_kludges")
 
 -- Define some layouts. 
---dopath("cfg_layouts")
+dopath("cfg_layouts")
 
 -- Load some modules. Bindings and other configuration specific to modules
 -- are in the files cfg_modulename.lua.
---dopath("mod_query")
---dopath("mod_menu")
---dopath("mod_tiling")
---dopath("mod_statusbar")
---dopath("mod_dock")
---dopath("mod_sp")
---dopath("local.lua")
+dopath("mod_query")
+dopath("mod_menu")
+dopath("mod_tiling")
+dopath("mod_statusbar")
+-- dopath("mod_dock")
+dopath("mod_sp")
+dopath("mod_notionflux")
+-- dopath("local.lua")
 
 --
 -- Common customisations

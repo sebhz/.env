@@ -29,7 +29,7 @@ local function pexec_next_string()
 	if settings.formatting == "none" then
 		return(settings.start_marker..get_command_result()..settings.end_marker)
 	end
-	
+
 	if settings.formatting == "split" then
 		if (curstring == nil) or (pos > string.len(curstring)) then
 			curstring = get_command_result()
@@ -54,7 +54,7 @@ local function pexec_next_string()
 			pos = pos+1
 			return(settings.start_marker..s..settings.end_marker)
 		end
-		
+
 		if settings.scroll_strategy == "word" then
 		    -- Initial condition
 			if curstring == nil then
@@ -62,23 +62,23 @@ local function pexec_next_string()
 				pos = as+1
 				while string.sub(curstring, pos, pos) ~= " " do
 					pos = pos - 1
-				end			
+				end
 				while string.sub(curstring, pos, pos) == " " do
 					pos = pos - 1
-				end			
+				end
 				return(settings.start_marker..string.sub(curstring, 1, pos)..settings.end_marker)
 			end
-			
+
 			-- Manage end of string
 			if pos == string.len(curstring) then
 				curstring = string.sub(curstring, pos-as+1)..settings.scroll_separator_string..get_command_result()
 				pos = as
 				while string.sub(curstring, pos, pos) == " " do
 					pos = pos + 1
-				end			
+				end
 				while string.sub(curstring, pos, pos) ~= " " do
 					pos = pos + 1
-				end			
+				end
 				return(settings.start_marker..string.sub(curstring, pos-as+1, pos)..settings.end_marker)
 			end
 
@@ -86,11 +86,11 @@ local function pexec_next_string()
 			repeat pos = pos+1
 			until string.sub(curstring, pos, pos) ~= " " or pos == string.len(curstring)
 			repeat pos = pos+1
-			until string.sub(curstring, pos, pos) == " " or pos == string.len(curstring)+1		
+			until string.sub(curstring, pos, pos) == " " or pos == string.len(curstring)+1
 			pos = pos-1
 			local bpos = pos-as+1
 			if bpos < 1 then bpos = 1 end
-			return(settings.start_marker..string.sub(curstring, bpos, pos)..settings.end_marker)			
+			return(settings.start_marker..string.sub(curstring, bpos, pos)..settings.end_marker)
 		end
 	end
 end
@@ -98,7 +98,7 @@ end
 local function update_pexec()
 	local s = pexec_next_string()
 	statusd.inform("pexec", s)
-	pexec_timer:set(settings.update_interval, update_pexec)	
+	pexec_timer:set(settings.update_interval, update_pexec)
 end
 
 pexec_timer = statusd.create_timer()

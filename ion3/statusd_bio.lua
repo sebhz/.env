@@ -6,7 +6,7 @@ local defaults = {
 	critical_threshold = 0.9,
 	important_threshold = 0.75
 }
-                
+
 local settings = table.join(statusd.get_config("bio"), defaults)
 local bio_timer = statusd.create_timer()
 local seconds_per_day = 24.0 * 60.0 * 60.0
@@ -19,7 +19,7 @@ local function round (x, decimal)
 
 	if x >= 0 then
 		return math.floor(y + 0.5)/p
-	end 
+	end
 
 	return math.ceil(y - 0.5)/p
 end

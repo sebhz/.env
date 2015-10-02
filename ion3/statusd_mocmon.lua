@@ -231,10 +231,10 @@ local function fetch_data(partial_data)
       mocdata = mocdata .. partial_data
       partial_data = coroutine.yield()
     end
-    
+
   local running = true -- assume the best
-  
-  if mocdata and mocdata ~= "" 
+
+  if mocdata and mocdata ~= ""
     then
       for attribute, value in string.gfind(mocdata, "([^:]*):([^\n]*)\n")
         do
@@ -245,7 +245,7 @@ local function fetch_data(partial_data)
       running = false
       infotable[valueassoc["mocmon_state"]]="NOT RUNNING"
   end
-   
+
   -- compute things like time left or divide things by 1000...
   infotable = addSpecialValues(infotable)
   -- scan for nil-values and fix them with '?'
@@ -256,7 +256,7 @@ local function fetch_data(partial_data)
     then
       stopped = true
   end
-  
+
   -- if we are to update the monitors...
   if settings.do_monitors
     then
@@ -266,7 +266,7 @@ local function fetch_data(partial_data)
           statusd.inform(k, ""..infotable[v])
         end
   end
- 
+
   -- create appropriate user-string
   if running and (not stopped)
     then
@@ -274,7 +274,7 @@ local function fetch_data(partial_data)
     else
       statusd.inform("mocmon_user", settings.not_running)
   end
-  
+
   mocmon_timer:set(settings.interval, update_mocmon)
 end
 

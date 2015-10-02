@@ -4,10 +4,17 @@
 local template
 local battmon_string = ""
 local mocmon_string = ""
+local tempmon_string = ""
 
 local _f=io.open('/proc/acpi/battery/BAT0/info')
 if _f then
 	battmon_string = "batt: %linuxbatt || "
+	_f:close()
+end
+
+_f=io.open('/sys/bus/acpi/devices/LNXTHERM:00/thermal_zone/temp')
+if _f then
+	tempmon_string = "CPU temp: %tempinfo_temperature || "
 	_f:close()
 end
 
@@ -21,7 +28,7 @@ if _l ~= "" then
 	mocmon_string = " || moc: %mocmon_user"
 end
 
-template="[ %date || load: %load || mem: %meminfo_mem_used/%meminfo_mem_total || " .. battmon_string .. "%df || %uptime || %workspace_pager (%workspace_name)" .. mocmon_string .. " ] %filler%systray"
+template="[ %date || load: %load || mem: %meminfo_mem_used/%meminfo_mem_total || " .. battmon_string .. "%df || " .. tempmon_string .. "%uptime || %workspace_pager (%workspace_name)" .. mocmon_string .. " ] %filler%systray"
 
 -- Create a statusbar
 mod_statusbar.create {
@@ -106,7 +113,11 @@ mod_statusbar.launch_statusd{
     },
 
     meminfo={
+		update_interval=10*1000
     },
+
+	tempinfo={
+	},
 
     linuxbatt={
 	--update_interval=15*1000,
