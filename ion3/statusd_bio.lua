@@ -1,6 +1,6 @@
 local defaults = {
 	day = 28.75,
-	mount = 4,
+	month = 4,
 	year  = 1973,
 	update_interval = 6048*1000,
 	critical_threshold = 0.9,
@@ -54,11 +54,21 @@ end
 
 local function biorhythm(jd_origin, jd_current)
 	local bio = {
-		physical = {cycle = 23, abbr = "p" },
-		emotional = {cycle = 28, abbr = "e" },
-		intellectual = {cycle = 33, abbr = "i" },
-		intuitive = {cycle = 38, abbr = "n" }
+		{name = "physical", cycle = 23, abbr = "p" },
+		{name = "emotional", cycle = 28, abbr = "e" },
+		{name = "intellectual", cycle = 33, abbr = "i" },
 	}
+
+	local derivate = function(t)
+		local d = 0
+		for i, v in pairs(bio) do
+			d = d + pi2/v.cycle*math.cos(pi2*t/v.cycle)
+		end
+		return d
+	end
+
+	local mean = 0
+	local n = 0
 
 	if jd_current == nil then
 		local d = os.date("*t")
@@ -71,9 +81,16 @@ local function biorhythm(jd_origin, jd_current)
 	for i, v in pairs(bio) do
 		v.value = round(math.sin(pi2*t/v.cycle), 2)
 		v.slope = slope(t, v.cycle)
+		n = n + 1
+		mean = mean + v.value
 	end
 
-    return bio, 4
+	local mean_table = {name= "mean", abbr= "=", value = mean/n}
+	local d = derivate(t)
+	if d < 0 then mean_table.slope = "-" elseif d > 0 then mean_table.slope = "+" else mean_table.slope = "=" end
+	table.insert(bio, mean_table)
+
+    return bio
 end
 
 local function update_bio()
@@ -82,19 +99,15 @@ local function update_bio()
 	local bio_str = ""
 	local abb_str = ""
 	local mean = 0
-	local j = 0
-	for i, v in pairs(bio) do
+
+	for i, v in ipairs(bio) do
 		abb_str = abb_str..v.abbr
 		bio_str = bio_str..string.format("%+.2f", v.value)..v.slope
-		if j < n-1 then
-			bio_str = bio_str.."/"
-		end
-		j = j + 1
-		mean = mean + v.value
+		if v.name ~= "mean" then bio_str = bio_str.."/" else mean = v.value end
 	end
 
 	statusd.inform("bio", abb_str..": "..bio_str)
-	mean = mean / n
+
 	if mean > settings.critical_threshold or mean < -settings.critical_threshold then
 		statusd.inform("bio_hint", "critical")
 	elseif mean > settings.important_threshold or mean < -settings.important_threshold then
