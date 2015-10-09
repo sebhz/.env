@@ -83,7 +83,7 @@ local function get_df()
                             size=guess_mem_unit(tonumber(fssize)),
                             used=guess_mem_unit(tonumber(fsused)),
                             avail=guess_mem_unit(tonumber(fsavail)),
-                            usedp=tonumber(fsusedp),
+                            usedp=(tonumber(fsusedp)).."%",
                             availp=((100 - tonumber(fsusedp)) .. "%") }
        i = j+1
    end
