@@ -28,7 +28,7 @@ if _l ~= "" then
 	mocmon_string = " || moc: %mocmon_user"
 end
 
-template="[ %date || load: %load || mem: %meminfo_mem_used/%meminfo_mem_total || " .. battmon_string .. "%df || " .. tempmon_string .. "%uptime || %workspace_pager (%workspace_name) || %bio" .. mocmon_string .. " ] %filler%systray"
+template="[ %date || load: %load || mem: %meminfo_mem_used/%meminfo_mem_total || " .. battmon_string .. "%df || " .. tempmon_string .. "%uptime || %workspace_pager (%workspace_name) || %bio" .. mocmon_string .. " || %stocks ] %filler%systray"
 
 -- Create a statusbar
 mod_statusbar.create {
@@ -146,6 +146,9 @@ mod_statusbar.launch_statusd{
 		user_format = "%songtitle% - %artist%",
 		not_running = "stopped",
 		do_monitors = false,
+	},
+
+	stocks = {
 	}
 }
 
