@@ -46,6 +46,11 @@ local function update_display()
 	local sym = settings.syms[disp_index]
 	local trend
 	local v = tonumber(stocks_prices[sym][2])
+	if v == nil then
+		statusd.inform("stocks", "-----: ---")
+		return
+	end
+
 	if v < 0 then
 		trend = "-"
 	else
