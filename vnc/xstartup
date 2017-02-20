@@ -1,0 +1,80 @@
+#!/bin/sh
+
+# Possible values are (in this order): DWM, NOTION, XFCE4, GNOME, KDE
+# If the required desktop environment does not exist, will try and fallback on the next one
+# until one is found 
+VNC_WM=${VNC_WM:="NOTION"}
+
+#Uncommment this line if using Gnome and your keyboard mappings are incorrect.
+#export XKL_XMODMAP_DISABLE=1
+
+# Load X resources (if any)
+if [ -e "$HOME/.Xresources" ]
+then
+        xrdb -merge "$HOME/.Xresources"
+fi
+
+# Try dwm, then notion, then xfce4, then GNOME session, then KDE or fall back generic
+if [ "DWM" = "$VNC_WM" ]
+then
+	if which dwm >/dev/null
+	then
+		if which dwmstatus >/dev/null
+		then
+			dwmstatus &
+		fi
+		xterm -bg black -fg white -sb -sl 1024 -T scratch &
+		dwm
+	else
+		VNC_WM="NOTION"
+	fi
+fi
+
+if [ "NOTION" = "$VNC_WM" ]
+then
+	if which notion >/dev/null
+	then
+		notion
+	else
+		VNC_WM="XFCE4"
+	fi
+fi
+
+if [ "XFCE4" = "$VNC_WM" ]
+then
+	if which xfce4-session >/dev/null
+	then
+		xfce4-session
+	else
+		VNC_WM="GNOME"
+	fi
+fi
+
+
+if [ "GNOME" = "$VNC_WM" ]
+then
+        if which gnome-session >/dev/null
+        then
+                gnome-session --session=ubuntu-2d --disable-acceleration-check &
+        else
+                VNC_WM="KDE"
+        fi
+fi
+
+if [ "KDE" = "$VNC_WM" ]
+then
+        if which startkde >/dev/null
+        then
+                startkde &
+        else
+                VNC_WM=""
+        fi
+fi
+
+# Run a generic session
+if [ -z "$VNC_WM" ]
+then
+        xsetroot -solid "#DAB082"
+        x-terminal-emulator -ls -T "$VNCDESKTOP Desktop" &
+        x-window-manager
+fi
