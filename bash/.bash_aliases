@@ -1,5 +1,10 @@
 alias h=history
 
+# Tell ncurses to use Unicode box drawing when an UTF-8 locale is used
+# To have ncurses programs like moc render nicely when using Putty for
+# instance
+export NCURSES_NO_UTF8_ACS=1
+
 # Search for all files containing pattern
 function fp() {
 	if [ -z "$1" ]; then

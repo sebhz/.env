@@ -28,7 +28,7 @@ if _l ~= "" then
 	mocmon_string = " || moc: %mocmon_user"
 end
 
-template="[ %date || load: %load || mem: %meminfo_mem_used/%meminfo_mem_total || " .. battmon_string .. "%df || " .. tempmon_string .. "%uptime || %workspace_pager (%workspace_name) || %bio" .. mocmon_string .. " || %stocks ] %filler%systray"
+template="[ %date || %itime || load: %load || mem: %meminfo_mem_used/%meminfo_mem_total || " .. battmon_string .. "%df || " .. tempmon_string .. "%uptime || %workspace_pager (%workspace_name) || %bio" .. mocmon_string .. " ] %filler%systray"
 
 -- Create a statusbar
 mod_statusbar.create {
@@ -90,6 +90,11 @@ mod_statusbar.launch_statusd{
         --]]
     },
 
+	-- Internet time
+	itime={
+        --update_interval=1*1000,
+	},
+
     -- Load meter
     load={
         --update_interval=10*1000,
@@ -127,7 +132,7 @@ mod_statusbar.launch_statusd{
     },
 
 	df = {
-		fslist = { "/home" },
+		fslist = { "/" },
 		template = "%mpoint: %used/%size (%usedp)",
 		update_interval = 5*1000,
 	},

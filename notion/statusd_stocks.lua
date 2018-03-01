@@ -70,6 +70,7 @@ local function update_stocks()
 	if update_mod >= settings.refresh_every then
 		local handle = io.popen(stocks_cmd)
 		local res = handle:read("*a")
+		handle:close()
 		if res ~= nil then
 			local v = res:split('\n')
 			for i, k in ipairs(settings.syms) do stocks_prices[k] = v[i]:split(",") end
