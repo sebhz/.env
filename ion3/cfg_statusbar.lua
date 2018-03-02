@@ -92,9 +92,17 @@ mod_statusbar.launch_statusd{
 
 	-- Internet time
 	itime={
-        --update_interval=1*1000,
 	},
 
+	-- Binary clock
+--[[
+	binclock={
+        low_sym = "_",
+        empty_sym = ".",
+        separator = "|",
+        --update_interval=1*1000,
+	},
+--]]
     -- Load meter
     load={
         --update_interval=10*1000,
