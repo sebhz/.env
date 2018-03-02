@@ -1,6 +1,0 @@
-#!/bin/sh
-
-nm-applet &
-$HOME/Scripts/bg_slideshow $HOME/Pictures &
-xscreensaver -no-splash &
-
