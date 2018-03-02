@@ -160,8 +160,5 @@ mod_statusbar.launch_statusd{
 		not_running = "stopped",
 		do_monitors = false,
 	},
-
-	stocks = {
-	}
 }
 
