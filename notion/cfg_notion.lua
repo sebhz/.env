@@ -103,11 +103,11 @@ dopath("mod_notionflux")
 
 -- Uncommenting the following lines should get you plain-old-menus instead
 -- of query-menus.
-
+--[[
 defbindings("WScreen", {
     kpress(META.."F12", "mod_menu.menu(_, _sub, 'mainmenu', {big=true})"),
 })
-
+]]--
 defbindings("WMPlex.toplevel", {
     kpress(META.."M", "mod_menu.menu(_, _sub, 'ctxmenu')"),
 })

@@ -95,10 +95,9 @@ defbindings("WScreen", {
 
     submap(META.."K", {
 		bdoc("Screen capture"),
-        kpress("X", "ioncore.exec_on(_, 'import -window root root.png')"),
+        kpress("O", "ioncore.exec_on(_, 'import -window root /tmp/root.png')"),
 	}),
 })
-
 
 -- Client window bindings
 --
