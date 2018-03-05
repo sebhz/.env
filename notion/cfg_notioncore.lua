@@ -89,9 +89,11 @@ defbindings("WScreen", {
 
 	-- OK, should not belong to the window manager - but this is too tempting
 	bdoc("Volume up."),
-	kpress(META.."equal", "ioncore.exec_on(_, 'amixer --quiet set Master 1+')"),
+	kpress("XF86AudioRaiseVolume", "ioncore.exec_on(_, 'amixer --quiet set Master 1+')"),
 	bdoc("Volume down."),
-	kpress(META.."minus", "ioncore.exec_on(_, 'amixer --quiet set Master 1-')"),
+	kpress("XF86AudioLowerVolume", "ioncore.exec_on(_, 'amixer --quiet set Master 1-')"),
+	bdoc("Toggle sound."),
+	kpress("XF86AudioMute", "ioncore.exec_on(_, 'amixer --quiet -D pulse set Master toggle')"),
 
     submap(META.."K", {
 		bdoc("Screen capture"),
