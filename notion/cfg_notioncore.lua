@@ -88,12 +88,15 @@ defbindings("WScreen", {
 	kpress(META.."Shift+Q", "notioncore.shutdown()"),
 
 	-- OK, should not belong to the window manager - but this is too tempting
+	-- TODO: validate dependencies and keymaps
 	bdoc("Volume up."),
 	kpress("XF86AudioRaiseVolume", "ioncore.exec_on(_, 'amixer --quiet set Master 1+')"),
 	bdoc("Volume down."),
 	kpress("XF86AudioLowerVolume", "ioncore.exec_on(_, 'amixer --quiet set Master 1-')"),
 	bdoc("Toggle sound."),
 	kpress("XF86AudioMute", "ioncore.exec_on(_, 'amixer --quiet -D pulse set Master toggle')"),
+	bdoc("Lock screen"),
+	kpress(META.."L", "ioncore.exec_on(_, 'xscreensaver-command -lock')"),
 
     submap(META.."K", {
 		bdoc("Screen capture"),
@@ -108,7 +111,7 @@ defbindings("WScreen", {
 defbindings("WClientWin", {
     bdoc("Nudge the client window. This might help with some "..
          "programs' resizing problems."),
-    kpress_wait(META.."L", "WClientWin.nudge(_)"),
+    kpress_wait(META.."N", "WClientWin.nudge(_)"),
 
     submap(META.."K", {
        bdoc("Kill client owning the client window."),
