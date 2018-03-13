@@ -28,7 +28,7 @@ if _l ~= "" then
 	mocmon_string = " || moc: %mocmon_user"
 end
 
-template="[ %date || %itime || load: %load || mem: %meminfo_mem_used/%meminfo_mem_total || " .. battmon_string .. "%df || " .. tempmon_string .. "%uptime || %workspace_pager (%workspace_name)" .. mocmon_string .. " ] %filler%systray"
+template="[ %date || %atime_ttime || load: %load || mem: %meminfo_mem_used/%meminfo_mem_total || " .. battmon_string .. "%df || " .. tempmon_string .. "%uptime || %workspace_pager (%workspace_name)" .. mocmon_string .. " ] %filler%systray"
 
 -- Create a statusbar
 mod_statusbar.create {
@@ -90,8 +90,8 @@ mod_statusbar.launch_statusd{
         --]]
     },
 
-	-- Internet time
-	itime={
+	-- Alternate time
+	atime={
 	},
 
 	-- Binary clock
