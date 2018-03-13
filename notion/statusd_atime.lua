@@ -9,7 +9,6 @@ Alternate ways to display time.
 
 local defaults = {
 	update_interval = 5000,
-	tz_offset = 1,
 }
 
 local SEC_PER_DAY = 86400
@@ -34,7 +33,8 @@ end
 
 local function update_atime()
 	-- Get current time in seconds
-	local dt=(os.time(os.date("*t"))+settings.tz_offset*3600)%SEC_PER_DAY
+	local _ = os.date("*t")
+	local dt=_.hour*3600 + _.min*60 + _.sec
 
 	-- Divide by one tenth of a day to obtain decimal time
 	statusd.inform("atime_dtime", string.format("%.4f", dt/(SEC_PER_DAY/10)))
@@ -52,9 +52,10 @@ local function update_atime()
 	statusd.inform("atime_ttime", basen(diurnal, BASE)..basen(unqua, BASE)..basen(nilqua, BASE).."."..v)
 
 	-- Get current UTC time in seconds add 1 hour for BMT
-    -- then convert to beats
-	local beats=((os.time()+3600)%86400)/86.4
-	statusd.inform("atime_itime", string.format("@%06.2f", beats))
+	-- then convert to beats
+	local _ = os.date("!*t")
+	local dt=_.hour*3600 + _.min*60 + _.sec + 3600
+	statusd.inform("atime_itime", string.format("@%06.2f", dt/86.4))
 
 	atime_timer:set(settings.update_interval, update_atime)
 end
