@@ -26,7 +26,8 @@ ALTMETA=os_meta .. "+Shift+"
 -- Terminal emulator
 local os_term=os.getenv("NOTION_TERM")
 if os_term == nil then
-	os_term = "xterm -fg darkgrey -bg black -sb -sl 1024"
+--	os_term = "xterm -fg darkgrey -bg black -sb -sl 1024"
+	os_term = "xterm -bg black -sb -sl 1024 -fn -misc-fixed-medium-r-normal--20-200-75-75-c-100-iso8859-1"
 end
 XTERM=os_term
 -- XTERM="terminator"

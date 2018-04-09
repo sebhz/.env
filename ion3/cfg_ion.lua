@@ -1,1 +1,0 @@
-../notion/cfg_notion.lua
