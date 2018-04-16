@@ -35,9 +35,9 @@ endif
 
 " Some syntax coloring
 set t_Co=256
+colors peaksea
 syntax on           " syntax highlighing
 set background=dark " adapt colors for background
-colors peaksea
 
 " Extra whitespaces highlighting
 " Highlight trailing whitespaces and spaces followed by tabs
