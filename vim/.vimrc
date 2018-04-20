@@ -2,6 +2,7 @@ set nocompatible    " use vim defaults
 set ls=2            " allways show status line
 set tabstop=4       " numbers of spaces of tab character
 set shiftwidth=4    " numbers of spaces to (auto)indent
+set expandtab       " replace tabs by spaces
 set scrolloff=3     " keep 3 lines when scrolling
 set showcmd         " display incomplete commands
 set hlsearch        " highlight searches
@@ -35,9 +36,12 @@ endif
 
 " Some syntax coloring
 set t_Co=256
-colors peaksea
 syntax on           " syntax highlighing
 set background=dark " adapt colors for background
+colors peaksea
+
+" No tab expansion for makefiles
+autocmd FileType make set noexpandtab
 
 " Extra whitespaces highlighting
 " Highlight trailing whitespaces and spaces followed by tabs
@@ -45,12 +49,6 @@ highlight ExtraWhitespace ctermbg=red guibg=red
 augroup extra_ws
 	autocmd!
 	autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
-augroup END
-
-" Expand tabs for java
-augroup java_setting
-	autocmd!
-	autocmd FileType java setlocal expandtab
 augroup END
 
 " Commenting blocks of code.
