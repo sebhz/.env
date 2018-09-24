@@ -11,9 +11,6 @@ export NCURSES_NO_UTF8_ACS=1
 # To get correct colors in GNU screen
 export TERM=xterm-256color
 
-# But I like my prompt uncolored
-PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-
 # Search for all files containing pattern
 function fp() {
 	if [ -z "$1" ]; then
