@@ -1,5 +1,5 @@
 set nocompatible    " use vim defaults
-set ls=2            " allways show status line
+set ls=2            " always show status line
 set tabstop=4       " numbers of spaces of tab character
 set shiftwidth=4    " numbers of spaces to (auto)indent
 set expandtab       " replace tabs by spaces
