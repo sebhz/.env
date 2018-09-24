@@ -8,6 +8,9 @@ export EDITOR=/usr/bin/vim
 # instance
 export NCURSES_NO_UTF8_ACS=1
 
+# To get correct colors in GNU screen
+export TERM=xterm-256color
+
 # Search for all files containing pattern
 function fp() {
 	if [ -z "$1" ]; then
