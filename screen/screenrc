@@ -3,6 +3,9 @@ layout save default
 vbell off
 term screen-256color
 
+# Tired of sending XOFF when trying to split screen
+bind s split -v
+
 #
 # http://www.gnu.org/software/screen/manual/html_node/String-Escapes.html
 #
@@ -29,8 +32,8 @@ term screen-256color
 # %m : current month (0-padded; %M for "Jan" etc.)
 # - : hyphen character
 # %d : current date (0-padded)
-hardstatus string "%{= kW} %H [%` %l ] %{= kW}|%{-} %-Lw%{= bW}%n%f %t%{-}%+Lw %=|%C%a %Y-%M-%d"
+hardstatus string "%{= kW}%H [%` %l ] %{= kW}|%{-} %-Lw%{= bW}%n%f %t%{-}%+Lw %=|%C%a %Y-%M-%d"
 hardstatus off
-bind f eval "hardstatus ignore"
-bind F eval "hardstatus alwayslastline"
+bind y eval "hardstatus ignore"
+bind Y eval "hardstatus alwayslastline"
 

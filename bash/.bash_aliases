@@ -9,7 +9,8 @@ export EDITOR=/usr/bin/vim
 export NCURSES_NO_UTF8_ACS=1
 
 # To get correct colors in GNU screen
-export TERM=xterm-256color
+# Uncomment if not already sent, if using puTTY for example
+# export TERM=xterm-256color
 
 # Search for all files containing pattern
 function fp() {
@@ -32,3 +33,4 @@ fi
 if [ -f ~/.bash_custom ]; then
 	. ~/.bash_custom
 fi
+
