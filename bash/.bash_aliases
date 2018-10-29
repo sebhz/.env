@@ -1,4 +1,5 @@
 alias h=history
+alias emacs='emacs -nw'
 
 # I like vim. e.g. for crontab
 export EDITOR=/usr/bin/vim
