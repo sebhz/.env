@@ -5,7 +5,7 @@ term screen-256color
 
 # I like to keep C-a as beginning of line. So remap
 # escape and meta to C-o
-escape ^oo
+# escape ^oo
 
 # Tired of sending XOFF when trying to split screen
 bind s split -v
