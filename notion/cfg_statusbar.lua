@@ -6,7 +6,7 @@ local battmon_string = ""
 local mocmon_string = ""
 local tempmon_string = ""
 
-local _f=io.open('/proc/acpi/battery/BAT0/info')
+local _f=io.open('/sys/class/power_supply/BAT0')
 if _f then
 	battmon_string = "batt: %linuxbatt || "
 	_f:close()
