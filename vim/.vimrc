@@ -19,7 +19,7 @@ set modeline        " last lines in document sets vim mode
 set modelines=3     " number lines checked for modelines
 set shortmess=atI   " Abbreviate messages
 set nostartofline   " don't jump to first character when paging
-set whichwrap=b,s,h,l,<,>,[,]   " move freely between files
+set whichwrap=b,s,h,l " move freely between files
 " 
 set noautoindent
 set nosmartindent

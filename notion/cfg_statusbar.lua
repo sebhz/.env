@@ -75,7 +75,7 @@ mod_statusbar.launch_statusd{
     -- Date meter
     date={
         -- ISO-8601 date format with additional abbreviated day name
-        date_format='%a %Y-%m-%d %H:%M',
+        date_format='%a %Y-%m-%d %H:%M (WW%V)',
         -- Finnish etc. date format
         --date_format='%a %d.%m.%Y %H:%M',
         -- Locale date format (usually shows seconds, which would require
