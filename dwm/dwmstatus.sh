@@ -13,7 +13,7 @@ get_volu() {
 }
 
 get_date() {
-    DATE="$(date '+%d/%m %H:%M')"
+    DATE="$(date '+%d/%m %H:%M (WW%V)')"
 }
 
 get_batt() {
@@ -42,7 +42,7 @@ get_netw() {
     _rxmib=$(bc <<< "scale=2; $(cat /sys/class/net/${if}/statistics/rx_bytes)/1024/1024")
     _txmib=$(bc <<< "scale=2; $(cat /sys/class/net/${if}/statistics/tx_bytes)/1024/1024")
 
-    NETW="$if: ${_rxmib} MiB(r) | ${_txmib} MiB(t)"
+    NETW="$if: ${_rxmib}|${_txmib}⇵ MiB"
 }
 
 while true; do
