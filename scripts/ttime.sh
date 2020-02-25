@@ -2,6 +2,8 @@
 
 # Displays local duodecimal time
 # See https://en.wikipedia.org/wiki/Duodecimal
+# TODO: add reverse 2 and reverse 3 for 11 and 12
+#       U+218A and U+218B
 ttime=$(echo "\
 hour=$(date +%H);
 min=$(date +%M);
