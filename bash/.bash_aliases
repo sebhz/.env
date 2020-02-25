@@ -21,6 +21,17 @@ function fp() {
 	find . -exec grep -iIl "$1" {} \; 2>/dev/null
 }
 
+# Make and get make log
+function mka() {
+    which nproc >/dev/null
+    if [ $? -eq 0 ]; then
+        NPROCS=$(nproc)
+    else
+        NPROCS=$(cat /proc/cpuinfo | grep processor | wc -l)
+    fi
+    time make $1 -j$NPROCS | tee "$(date +%Y%m%d%H%M).log"
+}
+
 if [ -f /usr/share/autojump/autojump.sh ]; then
 	. /usr/share/autojump/autojump.sh
 fi
