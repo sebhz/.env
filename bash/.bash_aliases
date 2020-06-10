@@ -1,5 +1,7 @@
 alias h=history
 alias emacs='emacs -nw'
+# Detachable cmus (moc seems unmaintainted these days...)
+alias cmus='screen -q -r -D cmus || screen -S cmus $(which cmus)'
 
 # I like vim. e.g. for crontab
 export EDITOR=/usr/bin/vim
@@ -10,8 +12,23 @@ export EDITOR=/usr/bin/vim
 export NCURSES_NO_UTF8_ACS=1
 
 # To get correct colors in GNU screen
-# Uncomment if not already sent, if using puTTY for example
+# Uncomment if not already set elsewhere (putty...)
 # export TERM=xterm-256color
+
+function screenk() {
+    screen -X -S $1 quit
+}
+
+# Python virtualenv aliases
+function avv() {
+    _f="${HOME}/.venv/${1}/bin/activate"
+    if [ -f "$_f" ]; then
+        source ${HOME}/.venv/${1}/bin/activate
+    else
+        echo "$_f does not exist." >&2
+    fi
+}
+alias avl='ls ${HOME}/.venv'
 
 # Search for all files containing pattern
 function fp() {
@@ -34,11 +51,6 @@ function mka() {
 
 if [ -f /usr/share/autojump/autojump.sh ]; then
 	. /usr/share/autojump/autojump.sh
-fi
-
-# Some programs seem to be stored in .local/bin (?)
-if [ -d ~/.local/bin ]; then
-	export PATH=~/.local/bin:${PATH}
 fi
 
 # For customization that should not go to github !
