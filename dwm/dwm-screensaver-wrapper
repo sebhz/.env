@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# For recent versions of cmus, cmus-remote -U will do the same thing
+_cmus_playing=$(cmus-remote -Q 2>/dev/null | head -1 | cut -d' ' -f2)
+if [ "$_cmus_playing" == "playing" ]; then
+    cmus-remote -u
+fi
+
+xscreensaver-command -lock
+
