@@ -1,5 +1,19 @@
 #!/bin/bash
 
+get_cmus() {
+    _cmus_sts=$(cmus-remote -Q 2>&1 | grep status | cut -d' ' -f2)
+
+    if [ "${_cmus_sts}" == "stopped" ]; then
+        MON_CMUS='x'
+    elif [ "${_cmus_sts}" == "paused" ]; then
+        MON_CMUS='|'
+    elif [ "${_cmus_sts}" == "playing" ]; then
+        MON_CMUS='>'
+    else
+        MON_CMUS="-"
+    fi
+}
+
 # Caps and num lock (my keyboard has no LED)
 get_mods() {
     MON_MODS=$(xset q | grep Caps | tr -s ' ' | cut -d ' ' -f 5,9 | sed 's/on/▣/g' | sed 's/off/▢/g')
@@ -100,7 +114,8 @@ while true; do
     get_netw ${CFG_NETIF}
     get_dropbox
     get_mods
+    get_cmus
 
-    xsetroot -name "[$MON_MODS] [$MON_DROPBOX] [$MON_NETW] [vol: $MON_VOL] [load: $MON_LOADAVG] [temp:$MON_TEMP] [bat: $MON_BAT] [$MON_DATE]"
+    xsetroot -name "[$MON_CMUS] [$MON_MODS] [$MON_DROPBOX] [$MON_NETW] [vol: $MON_VOL] [load: $MON_LOADAVG] [temp:$MON_TEMP] [bat: $MON_BAT] [$MON_DATE]"
     sleep 5
 done
