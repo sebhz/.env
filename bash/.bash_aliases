@@ -20,7 +20,8 @@ function screenk() {
 }
 
 # Python virtualenv aliases
-function avv() {
+alias vel='ls ${HOME}/.venv'
+function vea() {
     _f="${HOME}/.venv/${1}/bin/activate"
     if [ -f "$_f" ]; then
         source ${HOME}/.venv/${1}/bin/activate
@@ -28,7 +29,16 @@ function avv() {
         echo "$_f does not exist." >&2
     fi
 }
-alias avl='ls ${HOME}/.venv'
+
+function vec() {
+    _f="${HOME}/.venv/${1}"
+    if [ -f "$_f" ]; then
+        echo "$_f already exists." >&2
+    else
+        python3 -m venv --system-site-packages "${HOME}/.venv/${1}"
+    fi
+}
+
 
 # Search for all files containing pattern
 function fp() {
