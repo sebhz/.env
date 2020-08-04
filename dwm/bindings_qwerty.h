@@ -7,6 +7,7 @@ static Key keys[] = {
 	{ 0,         XF86XK_AudioLowerVolume,      spawn,          {.v = lovolcmd } },
 	{ 0,         XF86XK_AudioRaiseVolume,      spawn,          {.v = hivolcmd } },
 	{ 0,                XF86XK_AudioPlay,      spawn,          {.v = toggleaudioplaycmd } },
+	{ 0,                   XF86XK_Search,      spawn,          {.v = showosdcmd } },
 	{ 0,                            XK_Print,  spawn,          {.v = capturescreencmd } },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = capturescreencmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
@@ -41,5 +42,4 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
-
 

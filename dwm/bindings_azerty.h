@@ -6,6 +6,7 @@ static Key keys[] = {
 	{ 0,                XF86XK_AudioMute,      spawn,          {.v = togglevolcmd } },
 	{ 0,         XF86XK_AudioLowerVolume,      spawn,          {.v = lovolcmd } },
 	{ 0,         XF86XK_AudioRaiseVolume,      spawn,          {.v = hivolcmd } },
+	{ 0,                   XF86XK_Search,      spawn,          {.v = showosdcmd } },
 	{ 0,                XF86XK_AudioPlay,      spawn,          {.v = toggleaudioplaycmd } },
 	{ 0,                            XK_Print,  spawn,          {.v = capturescreencmd } },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = capturescreencmd } },
@@ -30,15 +31,15 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	TAGKEYS(                        XK_ampersand,                      0)
-	TAGKEYS(                        XK_eacute,                      1)
-	TAGKEYS(                        XK_quotedbl,                      2)
-	TAGKEYS(                        XK_apostrophe,                      3)
-	TAGKEYS(                        XK_parenleft,                      4)
-	TAGKEYS(                        XK_minus,                      5)
-	TAGKEYS(                        XK_egrave,                      6)
-	TAGKEYS(                        XK_underscore,                      7)
-	TAGKEYS(                        XK_ccedilla,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	TAGKEYS(                        XK_ampersand,              0)
+	TAGKEYS(                        XK_eacute,                 1)
+	TAGKEYS(                        XK_quotedbl,               2)
+	TAGKEYS(                        XK_apostrophe,             3)
+	TAGKEYS(                        XK_parenleft,              4)
+	TAGKEYS(                        XK_minus,                  5)
+	TAGKEYS(                        XK_egrave,                 6)
+	TAGKEYS(                        XK_underscore,             7)
+	TAGKEYS(                        XK_ccedilla,               8)
+	{ MODKEY|ShiftMask,             XK_q,      quit,          {0} },
 };
 

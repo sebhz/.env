@@ -65,6 +65,7 @@ static const char *hivolcmd[]  = { "amixer", "-c2", "set", "Headset", "5%+", NUL
 static const char *togglevolcmd[]  = { "amixer", "-c2", "set", "Headset", "toggle", NULL };
 static const char *toggleaudioplaycmd[]  = { "cmus-remote", "-u", NULL };
 static const char *capturescreencmd[]  = { "convert", "x:root", "/tmp/capture.png", NULL };
+static const char *showosdcmd[] = { "dwm-osd-wrapper", NULL };
 
 #include "bindings.h"
 

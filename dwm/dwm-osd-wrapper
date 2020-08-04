@@ -1,0 +1,14 @@
+#!/bin/bash
+#set -ex
+
+_cmus_playing=$(cmus-remote -Q 2>/dev/null | head -1 | cut -d' ' -f2)
+if [ "$_cmus_playing" == "playing" ]; then
+    _artist=$(cmus-remote -Q 2>/dev/null | grep "tag artist" | cut -d' ' -f3-)
+    _title=$(cmus-remote -Q 2>/dev/null | grep "tag title" | cut -d' ' -f3-)
+    _osd_str="${_artist} - ${_title}"
+else
+    _osd_str="cmus is not playing anything now"
+fi
+
+echo ${_osd_str} | aosd_cat --font="Ubuntu Bold 30" --transparency=2 --fade-full=1000
+
