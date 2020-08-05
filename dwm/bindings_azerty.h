@@ -9,7 +9,6 @@ static Key keys[] = {
 	{ 0,                   XF86XK_Search,      spawn,          {.v = showosdcmd } },
 	{ 0,                XF86XK_AudioPlay,      spawn,          {.v = toggleaudioplaycmd } },
 	{ 0,                            XK_Print,  spawn,          {.v = capturescreencmd } },
-	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = capturescreencmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
