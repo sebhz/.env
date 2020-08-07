@@ -2,6 +2,6 @@
 
 CAPTURE_DIR=${HOME}/Documents/screen_captures
 mkdir -p $CAPTURE_DIR
-cap_filename=$(mktemp -p ${CAPTURE_DIR} -u)
-convert x:root "${cap_filename}.png"
+cap_filename="$(date +%Y%m%d%H%M%S).png"
+convert x:root "${CAPTURE_DIR}/${cap_filename}"
 
