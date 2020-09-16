@@ -1,7 +1,15 @@
 alias h=history
 alias emacs='emacs -nw'
+
 # Detachable cmus (moc seems unmaintainted these days...)
 alias cmus='screen -q -r -D cmus || screen -S cmus $(which cmus)'
+
+# The idiot proof alias.
+alias reboot='echo -n "Are you really sure this is what you want (y/n)? ";
+              read _rep;
+              if [ "$_rep" = "y" ]; then
+                  /sbin/reboot
+              fi'
 
 # I like vim. e.g. for crontab
 export EDITOR=/usr/bin/vim
@@ -19,8 +27,10 @@ function screenk() {
     screen -X -S $1 quit
 }
 
-# Python virtualenv aliases
+# Python virtualenv aliases and function
 alias vel='ls ${HOME}/.venv'
+alias ved=deactivate
+
 function vea() {
     _f="${HOME}/.venv/${1}/bin/activate"
     if [ -f "$_f" ]; then
@@ -35,12 +45,12 @@ function vec() {
     if [ -f "$_f" ]; then
         echo "$_f already exists." >&2
     else
-        python3 -m venv --system-site-packages "${HOME}/.venv/${1}"
+        python3 -m venv --system-site-packages "$_f"
     fi
 }
 
-
 # Search for all files containing pattern
+# In case ag cannot be installed on the box
 function fp() {
 	if [ -z "$1" ]; then
 		return

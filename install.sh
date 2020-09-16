@@ -1,10 +1,11 @@
 #!/bin/bash
 
-cd $HOME
+# dwm is a bit special. Stowing it has no sense.
+stow -v emacs
+stow -v git
+# notion3 kept for reference - will be dropped.
+stow -v notion4
+stow -v screen
+stow -v vim
+stow -v vnc
 
-ln -s .env/notion .notion
-ln -s .env/vim/.vim .
-ln -s .env/vim/.vimrc .
-ln -s .env/bash/.bash_aliases .
-ln -s .env/bash/.dircolors .
-ln -s .env/git/.gitconfig .
