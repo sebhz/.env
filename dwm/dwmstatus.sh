@@ -49,7 +49,12 @@ get_temp() {
 
 # Volume
 get_volu() {
-    MON_VOL="$(amixer -c$1 sget Master | grep -Eo '[0-9]+%')"
+    _v=$(dwm-audio-wrapper gv)
+    if [ "$_v" != "" ]; then
+        MON_VOL="${_v}% ($(dwm-audio-wrapper sk))"
+    else
+        MON_VOL="x"
+    fi
 }
 
 # Date and time
@@ -100,15 +105,13 @@ get_netw() {
 # Modify variables here
 # Network interface
 CFG_NETIF=wlo1
-# Audio card for volume monitoring
-CFG_AUD_C=1
 # Battery low level (%) for alert display
 CFG_BAT_LO=15
 
 while true; do
     get_temp
     get_batt ${CFG_BAT_LO}
-    get_volu ${CFG_AUD_C}
+    get_volu
     get_date
     get_load
     get_netw ${CFG_NETIF}

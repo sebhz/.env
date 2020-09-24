@@ -1,0 +1,20 @@
+#!/bin/bash
+
+_current_sink=$(pactl list short sinks | grep RUNNING | cut -d$'\t' -f1)
+
+if [ "$_current_sink" != "" ]
+then
+    case "$1" in
+    up)
+        pactl set-sink-volume $_current_sink +5% ;;
+    dn)
+        pactl set-sink-volume $_current_sink -5% ;;
+    mt)
+        pactl set-sink-mute $_current_sink toggle ;;
+    gv)
+        pactl list sinks | grep -A 10 "Sink #$_current_sink" | awk '/Volume: front/{ print $5 }' | sed 's/[%|,]//g' ;;
+    sk)
+        echo $_current_sink ;;
+    esac
+fi
+
