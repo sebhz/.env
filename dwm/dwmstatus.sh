@@ -40,16 +40,25 @@ get_dropbox() {
 
 # Processor or package temp. Heavily dependent on machine
 get_temp() {
-    _temp=""
-    for i in $(seq 0 1); do
-        _temp=${_temp}" $(($(cat /sys/class/thermal/thermal_zone$i/temp)/1000))℃"
-    done
+    _pkg=$1
+    _temp="-"
+
+    if [ -e /usr/bin/sensors ]; then
+        _temp=$(sensors | grep CPU | sed -e 's/ \+/ /g' | cut -d' ' -f2)
+    else
+        # Try and do our best from sysfs (for some reason those sometimes change)
+        # CPU temp is thermal zone9 on my machine
+        if [ -e /sys/class/thermal/thermal_zone${_pkg}/temp ]; then
+            _temp=$(($(cat /sys/class/thermal/thermal_zone${_pkg}/temp)/1000))℃
+        fi
+    fi
     MON_TEMP=${_temp}
 }
 
 # Volume
 get_volu() {
     _v=$(dwm-audio-wrapper gv)
+
     if [ "$_v" != "" ]; then
         MON_VOL="${_v}% ($(dwm-audio-wrapper sk))"
     else
@@ -67,7 +76,6 @@ get_date() {
 # Battery level. Also dependent on machine
 get_batt() {
     _low_limit=$1
-
     _cap="$(cat /sys/class/power_supply/BAT0/capacity)"
     _sts="$(cat /sys/class/power_supply/BAT0/status)"
 
@@ -95,11 +103,13 @@ get_load() {
 # Network up/downlink volume transferred
 get_netw() {
     if=$1
+    MON_NETW="-"
 
-    _rxmib=$(bc <<< "scale=2; $(cat /sys/class/net/${if}/statistics/rx_bytes)/1024/1024")
-    _txmib=$(bc <<< "scale=2; $(cat /sys/class/net/${if}/statistics/tx_bytes)/1024/1024")
-
-    MON_NETW="$if: ${_rxmib}|${_txmib}⇵ MiB"
+    if [ -e /sys/class/net/${if}/statistics ]; then
+        _rxmib=$(bc <<< "scale=2; $(cat /sys/class/net/${if}/statistics/rx_bytes)/1024/1024")
+        _txmib=$(bc <<< "scale=2; $(cat /sys/class/net/${if}/statistics/tx_bytes)/1024/1024")
+        MON_NETW="$if: ${_rxmib}|${_txmib}⇵ MiB"
+    fi
 }
 
 # Modify variables here
@@ -107,9 +117,11 @@ get_netw() {
 CFG_NETIF=wlo1
 # Battery low level (%) for alert display
 CFG_BAT_LO=15
+# Thermal zone number for CPU in case sensors is not installed
+CFG_THZ=1
 
 while true; do
-    get_temp
+    get_temp ${CFG_THZ}
     get_batt ${CFG_BAT_LO}
     get_volu
     get_date
