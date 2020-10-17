@@ -25,7 +25,8 @@ get_dropbox() {
         /usr/bin/dropbox running
         if [ "$?" -eq 1 ]; then
             _st=$(/usr/bin/dropbox status)
-            if [ "${_st}" == "Up to date" ]; then
+            # One day I'll look into this locale problem
+            if [ "${_st}" == "À jour" ]; then
                 MON_DROPBOX="U"
             else
                 MON_DROPBOX="W"
@@ -44,7 +45,7 @@ get_temp() {
     _temp="-"
 
     if [ -e /usr/bin/sensors ]; then
-        _temp=$(sensors | grep CPU | sed -e 's/ \+/ /g' | cut -d' ' -f2)
+        _temp=$(sensors | grep temp1 | sed -e 's/ \+/ /g' | cut -d' ' -f2)
     else
         # Try and do our best from sysfs (for some reason those sometimes change)
         # CPU temp is thermal zone9 on my machine
