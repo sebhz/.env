@@ -1,6 +1,6 @@
 #!/bin/bash
+set -ex
 
-# xrandr script
 if [ -f ${HOME}/.screenlayout/default.sh ] ; then
     ${HOME}/.screenlayout/default.sh
 fi
