@@ -1,9 +1,11 @@
 #!/bin/sh
 
-# Is my external monitor connected ?
-xrandr | grep DP-1-1 | grep connected
+# Is my external monitor not disconnected ?
+xrandr | grep HDMI-1-1 | grep disconnected
 
 if [ $? = 0 ]; then
-    xrandr --output eDP-1 --off --output DP-1-2 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-2 --off --output HDMI-1 --off --output DP-1 --off --output DP-1-3 --off --output DP-2 --off --output DP-1-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal
+    exit
 fi
+
+xrandr --output eDP-1-1 --off --output HDMI-1-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal
 
