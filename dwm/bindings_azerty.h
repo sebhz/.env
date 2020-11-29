@@ -1,6 +1,7 @@
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY|ControlMask,           XK_a,      spawn,          {.v = passmgrcmd} },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lockcmd } },
 	{ 0,                XF86XK_AudioMute,      spawn,          {.v = togglevolcmd } },

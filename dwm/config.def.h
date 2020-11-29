@@ -66,6 +66,7 @@ static const char *togglevolcmd[]  = { "dwm-audio-wrapper", "mt", NULL };
 static const char *toggleaudioplaycmd[]  = { "cmus-remote", "-u", NULL };
 static const char *capturescreencmd[]  = { "dwm-screencapture-wrapper", NULL };
 static const char *showosdcmd[] = { "dwm-osd-wrapper", NULL };
+static const char *passmgrcmd[] = { "dwm-passmgr-wrapper", NULL };
 
 #include "bindings.h"
 
