@@ -13,6 +13,9 @@ if [ -e /usr/bin/xscreensaver ]; then
     /usr/bin/xscreensaver -nosplash &
 fi
 
+# Remap CapsLock to Escape
+setxkbmap -option caps:escape
+
 if [ -e /usr/local/bin/dwm ]; then
     # Tell AWT toolkit we are a non reparenting WM
     export _JAVA_AWT_WM_NONREPARENTING=1

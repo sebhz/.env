@@ -20,9 +20,9 @@ get_cmus() {
     fi
 }
 
-# Caps and num lock (my keyboard has no LED)
+# Num lock (my keyboard has no LED)
 get_mods() {
-    MON_MODS=$(xset q | grep Caps | tr -s ' ' | cut -d ' ' -f 5,9 | sed 's/on/▣/g' | sed 's/off/▢/g')
+    MON_MODS=$(xset q | grep Caps | tr -s ' ' | cut -d ' ' -f 9 | sed 's/on/▣/g' | sed 's/off/▢/g')
 }
 
 # Dropbox daemon status... kind of
