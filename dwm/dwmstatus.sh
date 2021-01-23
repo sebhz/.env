@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Sun altitude and azimuth
+get_sun() {
+    local lp="/opt/astro/meeus/bash"
+    MON_SUN=$(ASTRO_SH_LIB_PATH=${lp}/lib ${lp}/prg/sun_coord.sh 43.56 -7.12)
+}
+
 get_cmus() {
     _cmus_sts=$(cmus-remote -Q 2>&1 | grep status | cut -d' ' -f2)
 
@@ -48,7 +54,6 @@ get_temp() {
         _temp=$(sensors | grep temp1 | sed -e 's/ \+/ /g' | cut -d' ' -f2)
     else
         # Try and do our best from sysfs (for some reason those sometimes change)
-        # CPU temp is thermal zone9 on my machine
         if [ -e /sys/class/thermal/thermal_zone${_pkg}/temp ]; then
             _temp=$(($(cat /sys/class/thermal/thermal_zone${_pkg}/temp)/1000))℃
         fi
@@ -131,7 +136,7 @@ while true; do
     get_dropbox
     get_mods
     get_cmus
-
-    xsetroot -name "[$MON_CMUS] [$MON_MODS] [$MON_DROPBOX] [$MON_NETW] [vol: $MON_VOL] [load: $MON_LOADAVG] [temp:$MON_TEMP] [bat: $MON_BAT] [$MON_DATE]"
+    get_sun
+    xsetroot -name "[$MON_CMUS] [$MON_MODS] [$MON_DROPBOX] [$MON_NETW] [vol: $MON_VOL] [load: $MON_LOADAVG] [temp:$MON_TEMP] [bat: $MON_BAT] [$MON_DATE] [$MON_SUN]"
     sleep 5
 done
