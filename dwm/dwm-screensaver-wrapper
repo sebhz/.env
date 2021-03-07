@@ -6,5 +6,9 @@ if [ "$_cmus_playing" == "playing" ]; then
     cmus-remote -u
 fi
 
+# Change image subdirectory on each invocation
+_img_dir=$(ls -d ${HOME}/Pictures/screensaver/* | sort -R | head -1)
+sed -i -e "s#imageDirectory:.*#imageDirectory: $_img_dir#" ${HOME}/.xscreensaver
+
 xscreensaver-command -lock
 
