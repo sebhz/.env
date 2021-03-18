@@ -30,20 +30,21 @@ function screenk() {
 }
 
 # Python virtualenv aliases and function
-alias vel='ls ${HOME}/.venv'
 alias ved=deactivate
+alias vel='ls ${HOME}/.venv'
 
 function vea() {
-    _f="${HOME}/.venv/${1}/bin/activate"
+    local _f="${HOME}/.venv/${1}/bin/activate"
     if [ -f "$_f" ]; then
-        source ${HOME}/.venv/${1}/bin/activate
+        source "$_f"
     else
         echo "$_f does not exist." >&2
     fi
 }
+complete -W "$(vel)" vea
 
 function vec() {
-    _f="${HOME}/.venv/${1}"
+    local _f="${HOME}/.venv/${1}"
     if [ -f "$_f" ]; then
         echo "$_f already exists." >&2
     else
