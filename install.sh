@@ -5,6 +5,7 @@ stow -v emacs
 stow -v git
 # notion3 kept for reference - will be dropped.
 stow -v notion4
+stow -v pylint
 stow -v screen
 stow -v vim
 stow -v vnc
