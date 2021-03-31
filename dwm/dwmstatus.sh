@@ -32,7 +32,7 @@ get_dropbox() {
         if [ "$?" -eq 1 ]; then
             _st=$(/usr/bin/dropbox status)
             # One day I'll look into this locale problem
-            if [ "${_st}" == "À jour" ]; then
+            if [ "${_st}" == "À jour" ] || [ "${_st}" == "Up to date" ]; then
                 MON_DROPBOX="U"
             else
                 MON_DROPBOX="W"
