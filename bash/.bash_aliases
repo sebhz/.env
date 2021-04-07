@@ -69,7 +69,7 @@ function mka() {
     else
         NPROCS=$(cat /proc/cpuinfo | grep processor | wc -l)
     fi
-    time make $1 -j$NPROCS | tee "$(date +%Y%m%d%H%M).log"
+    time make $1 -j$NPROCS 2>&1 | tee "$(date +%Y%m%d%H%M).log"
 }
 
 if [ -f /usr/share/autojump/autojump.sh ]; then
