@@ -9,9 +9,12 @@ if [ -f /usr/bin/compton ]; then
     compton &
 fi
 
-if [ -e /usr/bin/xscreensaver ]; then
-    /usr/bin/xscreensaver -nosplash &
-fi
+for xscreensaver_path in /usr/local/bin/xscreensaver /usr/bin/xscreensaver; do
+    if [ -e "$xscreensaver_path" ]; then
+        "$xscreensaver_path" -nosplash &
+        break
+    fi
+done
 
 # Remap CapsLock to Escape
 setxkbmap -option caps:escape
