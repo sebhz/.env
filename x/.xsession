@@ -1,7 +1,10 @@
 #!/bin/bash
 set -ex
 
-if [ -f ${HOME}/.screenlayout/default.sh ] ; then
+autorandr_path=$(which autorandr)
+if [ "$?" == "0" ]; then
+    $autorandr_path > /dev/null
+elif [ -f ${HOME}/.screenlayout/default.sh ] ; then
     ${HOME}/.screenlayout/default.sh
 fi
 
