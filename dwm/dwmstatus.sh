@@ -1,5 +1,9 @@
 #!/bin/bash
 
+get_tw() {
+    MON_TW=$(timew status)
+}
+
 # Sun altitude and azimuth
 get_sun() {
     local lp="/opt/astro/meeus/bash"
@@ -127,6 +131,7 @@ CFG_BAT_LO=15
 CFG_THZ=1
 
 while true; do
+#    get_tw
     get_temp ${CFG_THZ}
     get_batt ${CFG_BAT_LO}
     get_volu
@@ -137,6 +142,7 @@ while true; do
     get_mods
     get_cmus
     get_sun
+
     xsetroot -name "[$MON_CMUS] [$MON_MODS] [$MON_DROPBOX] [$MON_NETW] [vol: $MON_VOL] [load: $MON_LOADAVG] [temp:$MON_TEMP] [bat: $MON_BAT] [$MON_DATE] [$MON_SUN]"
     sleep 5
 done
