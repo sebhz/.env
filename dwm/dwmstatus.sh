@@ -143,6 +143,13 @@ while true; do
     get_cmus
     get_sun
 
-    xsetroot -name "[$MON_CMUS] [$MON_MODS] [$MON_DROPBOX] [$MON_NETW] [vol: $MON_VOL] [load: $MON_LOADAVG] [temp:$MON_TEMP] [bat: $MON_BAT] [$MON_DATE] [$MON_SUN]"
+    MON_STR="[$MON_CMUS] [$MON_MODS] [$MON_DROPBOX] [$MON_NETW] [vol: $MON_VOL] [load: $MON_LOADAVG] [temp:$MON_TEMP] [bat: $MON_BAT] [$MON_DATE] [$MON_SUN]"
+    if [ -n "${MON_DEBUG+x}" ]
+    then
+        echo "$MON_STR"
+        break
+    else
+        xsetroot -name "$MON_STR"
+    fi
     sleep 5
 done
