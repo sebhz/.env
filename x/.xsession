@@ -1,9 +1,9 @@
 #!/bin/bash
-set -ex
+set -x
 
 autorandr_path=$(which autorandr)
 if [ "$?" == "0" ]; then
-    $autorandr_path > /dev/null
+    $autorandr_path
 elif [ -f ${HOME}/.screenlayout/default.sh ] ; then
     ${HOME}/.screenlayout/default.sh
 fi
