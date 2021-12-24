@@ -1,10 +1,10 @@
 #!/bin/bash
 set -x
 
-autorandr_path=$(which autorandr)
-if [ "$?" == "0" ]; then
-    $autorandr_path
-elif [ -f ${HOME}/.screenlayout/default.sh ] ; then
+#autorandr_path=$(which autorandr)
+#if [ "$?" == "0" ]; then
+#    $autorandr_path
+if [ -f ${HOME}/.screenlayout/default.sh ] ; then
     ${HOME}/.screenlayout/default.sh
 fi
 
@@ -19,8 +19,8 @@ for xscreensaver_path in /usr/local/bin/xscreensaver /usr/bin/xscreensaver; do
     fi
 done
 
-# Remap CapsLock to Escape
-setxkbmap -option caps:escape
+# disable CapsLock and use US map
+setxkbmap us -option caps:none
 
 if [ -e /usr/local/bin/dwm ]; then
     # Tell AWT toolkit we are a non reparenting WM
