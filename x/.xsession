@@ -19,24 +19,25 @@ for xscreensaver_path in /usr/local/bin/xscreensaver /usr/bin/xscreensaver; do
     fi
 done
 
-# disable CapsLock and use US map
-setxkbmap us -option caps:none
+# disable CapsLock
+setxkbmap -option caps:none
 
-if [ -e /usr/local/bin/dwm ]; then
+# Background...
+if [ -e ${HOME}/.fehbg ]; then
+    ${HOME}/.fehbg &
+else
+    xsetroot -grey
+fi
+
+if [ -e /usr/bin/i3 ]; then
+    exec /usr/bin/i3
+elif [ -e /usr/local/bin/dwm ]; then
     # Tell AWT toolkit we are a non reparenting WM
     export _JAVA_AWT_WM_NONREPARENTING=1
-    # To get nice floating window movements we need something in the root window
-    if [ -e ${HOME}/.fehbg ]; then
-        ${HOME}/.fehbg &
-    else
-        xsetroot -grey
-    fi
     if [ -f ${HOME}/bin/dwmstatus.sh ] ; then
         ${HOME}/bin/dwmstatus.sh &
     fi
     exec /usr/local/bin/dwm
-elif [ -e /usr/bin/notion ]; then
-    exec /usr/bin/notion
 else
     exec xterm
 fi
