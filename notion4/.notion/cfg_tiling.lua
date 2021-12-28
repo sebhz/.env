@@ -1,1 +1,0 @@
-cfg_tiling_azerty.lua
