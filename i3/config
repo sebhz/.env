@@ -9,7 +9,7 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-set $mod Mod4
+set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -21,7 +21,7 @@ font pango:monospace 8
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
-# exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id dex --autostart --environment i3
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -32,7 +32,7 @@ font pango:monospace 8
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
+# exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -48,7 +48,7 @@ floating_modifier $mod
 bindsym $mod+Shift+Return exec i3-sensible-terminal
 
 # kill focused window
-bindsym $mod+c kill
+bindsym $mod+Shift+c kill
 
 # start dmenu (a program launcher)
 bindsym $mod+p exec --no-startup-id dmenu_run
@@ -82,13 +82,26 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# specific mode for setting split direction
-set $mode_split Split: [h]orizontal [v]ertical [t]oggle
-bindsym $mod+o mode "$mode_split"
-mode "$mode_split" {
+# alternate mode for rarely used commands
+set $mode_alt alternate mode
+bindsym $mod+o mode "$mode_alt"
+mode "$mode_alt" {
+    # change split direction
     bindsym v split vertical; mode "default"
+    bindsym $mod+v split vertical; mode "default"
     bindsym h split horizontal; mode "default"
+    bindsym $mod+h split horizontal; mode "default"
     bindsym t split toggle; mode "default"
+    bindsym $mod+t split toggle; mode "default"
+
+    # reload, restart, quit
+    bindsym c reload; mode "default"
+    bindsym $mod+c reload; mode "default"
+    bindsym r restart; mode "default"
+    bindsym $mod+r restart; mode "default"
+    bindsym q exit
+    bindsym $mod+q exit
+
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
@@ -100,9 +113,9 @@ bindsym $mod+t split toggle
 bindsym $mod+Return fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+z layout tabbed
-bindsym $mod+Shift+t layout toggle split
+#bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+x layout toggle tabbed splith splitv
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -143,10 +156,6 @@ bindsym $mod+Shift+4 move container to workspace number $ws4
 # client assignment to workspaces
 assign [class="Firefox"] 4
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
@@ -180,10 +189,16 @@ bindsym $mod+r mode "resize"
 bindsym $mod+F1 move scratchpad
 bindsym $mod+F2 scratchpad show
 
+# marking - we use one single mark at a time
+bindsym $mod+m unmark x; mark x
+bindsym $mod+g [con_mark="x"] focus
+bindsym $mod+Shift+m [con_mark="x"] layout tabbed; move window to mark x
+
 # lock screen
 bindsym $mod+Shift+s exec --no-startup-id xscreensaver-command -lock
 
 # screen capture
+bindsym $mod+c exec --no-startup-id flameshot full --path $HOME/Pictures/captures
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
