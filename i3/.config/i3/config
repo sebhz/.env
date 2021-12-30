@@ -13,26 +13,11 @@ set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+#font pango:monospace 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
-
-# Start XDG autostart .desktop files using dex. See also
-# https://wiki.archlinux.org/index.php/XDG_Autostart
-exec --no-startup-id dex --autostart --environment i3
-
-# The combination of xss-lock, nm-applet and pactl is a popular choice, so
-# they are included here as an example. Modify as you see fit.
-
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-# exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
-# exec --no-startup-id nm-applet
+font pango:DejaVu Sans Mono 8
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -86,14 +71,6 @@ bindsym $mod+Shift+Right move right
 set $mode_alt alternate mode
 bindsym $mod+o mode "$mode_alt"
 mode "$mode_alt" {
-    # change split direction
-    bindsym v split vertical; mode "default"
-    bindsym $mod+v split vertical; mode "default"
-    bindsym h split horizontal; mode "default"
-    bindsym $mod+h split horizontal; mode "default"
-    bindsym t split toggle; mode "default"
-    bindsym $mod+t split toggle; mode "default"
-
     # reload, restart, quit
     bindsym c reload; mode "default"
     bindsym $mod+c reload; mode "default"
@@ -113,9 +90,10 @@ bindsym $mod+t split toggle
 bindsym $mod+Return fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
+# those change the layout of the *father* of the focused window
 #bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+x layout toggle tabbed splith splitv
+bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -124,10 +102,10 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+q focus parent
+bindsym $mod+a focus parent
 
 # focus the child container
-#bindsym $mod+d focus child
+bindsym $mod+d focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.

@@ -1,9 +1,6 @@
 #!/bin/bash
 set -x
 
-#autorandr_path=$(which autorandr)
-#if [ "$?" == "0" ]; then
-#    $autorandr_path
 if [ -f ${HOME}/.screenlayout/default.sh ] ; then
     ${HOME}/.screenlayout/default.sh
 fi
@@ -12,19 +9,17 @@ if [ -f /usr/bin/compton ]; then
     compton &
 fi
 
-for xscreensaver_path in /usr/local/bin/xscreensaver /usr/bin/xscreensaver; do
-    if [ -e "$xscreensaver_path" ]; then
-        "$xscreensaver_path" -nosplash &
-        break
-    fi
-done
+# xscreensaver will be launched as part of xdg autostart
+# Start XDG autostart .desktop files using dex. See also
+# https://wiki.archlinux.org/index.php/XDG_Autostart
+dex --autostart --environment i3
 
 # disable CapsLock
 setxkbmap -option caps:none
 
 # Background...
-if [ -e ${HOME}/.fehbg ]; then
-    ${HOME}/.fehbg &
+if [ -e "${HOME}/.fehbg" ]; then
+    "${HOME}/.fehbg" &
 else
     xsetroot -grey
 fi
