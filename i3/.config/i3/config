@@ -83,7 +83,7 @@ mode "$mode_alt" {
     bindsym Return mode "default"
 }
 
-# toggle container split direction
+# create a split container, toggling direction
 bindsym $mod+t split toggle
 
 # enter fullscreen mode for the focused container
@@ -103,6 +103,12 @@ bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
+
+# move current window / container one level up the tree
+bindsym $mod+Shift+a \
+    mark _a; focus parent; focus parent; \
+    mark _b; [con_mark="_a"] focus; \
+    move window to mark _b; unmark _a; unmark _b
 
 # focus the child container
 bindsym $mod+d focus child
@@ -167,10 +173,17 @@ bindsym $mod+r mode "resize"
 bindsym $mod+F1 move scratchpad
 bindsym $mod+F2 scratchpad show
 
-# marking - we use one single mark at a time
-bindsym $mod+m unmark x; mark x
-bindsym $mod+g [con_mark="x"] focus
-bindsym $mod+Shift+m [con_mark="x"] layout tabbed; move window to mark x
+# toggle mark
+bindsym $mod+m mark --toggle ✓
+
+# focus marked window
+bindsym $mod+g [con_mark="✓"] focus
+
+# move marked window to current container
+bindsym $mod+Shift+m \
+    mark _x; \
+    [con_mark="✓"] move window to mark _x; \
+    unmark _x
 
 # lock screen
 bindsym $mod+Shift+s exec --no-startup-id xscreensaver-command -lock
