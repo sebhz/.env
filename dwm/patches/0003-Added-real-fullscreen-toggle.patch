@@ -1,0 +1,49 @@
+From 723f49553e13f1357278813319353055729b5560 Mon Sep 17 00:00:00 2001
+From: sebhz <seb@zyglute.fr>
+Date: Fri, 7 Jan 2022 20:07:44 +0100
+Subject: [PATCH 3/3] Added 'real' fullscreen toggle
+
+
+diff --git a/bindings.h b/bindings.h
+index d4ffce7..e095ac9 100644
+--- a/bindings.h
++++ b/bindings.h
+@@ -23,8 +23,8 @@
+ 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+ 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+ 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+-	{ MODKEY,                       XK_space,  setlayout,      {0} },
+ 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
++	{ MODKEY,                       XK_space,  togglefulscr,   {0} },
+ 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
+ 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
+ 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
+diff --git a/dwm.c b/dwm.c
+index 4507dd8..b4f0ef4 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -242,6 +242,7 @@ static void tagmon(const Arg *arg);
+ static void tile(Monitor *);
+ static void togglebar(const Arg *arg);
+ static void togglefloating(const Arg *arg);
++static void togglefulscr(const Arg *arg);
+ static void toggletag(const Arg *arg);
+ static void toggleview(const Arg *arg);
+ static void unfocus(Client *c, int setfocus);
+@@ -1924,6 +1925,13 @@ togglefloating(const Arg *arg)
+ 	arrange(selmon);
+ }
+ 
++void
++togglefulscr(const Arg *arg)
++{
++    if (selmon->sel)
++        setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
++}
++
+ void
+ toggletag(const Arg *arg)
+ {
+-- 
+2.25.1
+
