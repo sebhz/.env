@@ -27,9 +27,16 @@ fi
 if [ -e /usr/local/bin/dwm ]; then
     # Tell AWT toolkit we are a non reparenting WM
     export _JAVA_AWT_WM_NONREPARENTING=1
-    if [ -f ${HOME}/bin/dwmstatus.sh ] ; then
-        ${HOME}/bin/dwmstatus.sh &
+
+    # Stuff for statusbar
+    if [ -f ${HOME}/bin/pulse_monitor ] ; then
+        ${HOME}/bin/pulse_monitor &
     fi
+    if [ -f ${HOME}/bin/dwmblocks ] ; then
+        ${HOME}/bin/dwmblocks &
+    fi
+
+    # Launch WM
     exec /usr/local/bin/dwm
 elif [ -e /usr/bin/i3 ]; then
     exec /usr/bin/i3
