@@ -54,3 +54,5 @@ noremap  <Down> <Nop>
 noremap  <Left> <Nop>
 noremap  <Right> <Nop>
 
+" I like .forth extension for my forth files
+autocmd BufNewFile,BufRead *.forth set syntax=forth
