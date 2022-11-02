@@ -1,8 +1,8 @@
 set nocompatible    " use vim defaults
 set ls=2            " always show status line
+set expandtab       " replace tabs by spaces
 set tabstop=4       " numbers of spaces of tab character
 set shiftwidth=4    " numbers of spaces to (auto)indent
-set expandtab       " replace tabs by spaces
 set scrolloff=3     " keep 3 lines when scrolling
 set showcmd         " display incomplete commands
 set hlsearch        " highlight searches
@@ -24,15 +24,9 @@ set whichwrap=b,s,h,l " move freely between files
 set noautoindent
 set nosmartindent
 set nocindent
+set exrc " Allow using local vimrc (useful for ctags)
 
 let c_space_errors = 1
-
-" Somehow this seems to be needed when working with Eterm
-if &term == "Eterm"
-	set t_kb=
-	fixdel
-	set t_kD=[3~
-endif
 
 " Some syntax coloring
 set t_Co=256
@@ -43,6 +37,9 @@ colors peaksea
 " No tab expansion for makefiles
 autocmd FileType make set noexpandtab
 
+" Use 2 spaces tab for shell
+autocmd Filetype sh setlocal tabstop=2 shiftwidth=2 softtabstop=2
+
 " Extra whitespaces highlighting
 " Highlight trailing whitespaces and spaces followed by tabs
 highlight ExtraWhitespace ctermbg=red guibg=red
@@ -50,19 +47,6 @@ augroup extra_ws
 	autocmd!
 	autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 augroup END
-
-" Commenting blocks of code.
-augroup block_comment
-	autocmd!
-	autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
-	autocmd FileType sh,ruby,python   let b:comment_leader = '# '
-	autocmd FileType conf,fstab       let b:comment_leader = '# '
-	autocmd FileType tex              let b:comment_leader = '% '
-	autocmd FileType mail             let b:comment_leader = '> '
-	autocmd FileType vim              let b:comment_leader = '" '
-augroup END
-noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
-noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
 
 " Breaking out of the habit of searching for the arrows
 noremap  <Up> <Nop>
