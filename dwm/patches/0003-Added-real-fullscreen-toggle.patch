@@ -1,14 +1,14 @@
-From 723f49553e13f1357278813319353055729b5560 Mon Sep 17 00:00:00 2001
+From 8a0ca56adb9f66362e2f5f5ef4aece52995ccb44 Mon Sep 17 00:00:00 2001
 From: sebhz <seb@zyglute.fr>
-Date: Fri, 7 Jan 2022 20:07:44 +0100
+Date: Mon, 7 Nov 2022 19:54:40 +0100
 Subject: [PATCH 3/3] Added 'real' fullscreen toggle
 
 
-diff --git a/bindings.h b/bindings.h
-index d4ffce7..e095ac9 100644
---- a/bindings.h
-+++ b/bindings.h
-@@ -23,8 +23,8 @@
+diff --git a/config.def.h b/config.def.h
+index 4556670..7c1e481 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -103,8 +103,8 @@ static Key keys[] = {
  	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
  	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
  	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -19,18 +19,18 @@ index d4ffce7..e095ac9 100644
  	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
  	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 diff --git a/dwm.c b/dwm.c
-index 4507dd8..b4f0ef4 100644
+index bd147e3..c485bd5 100644
 --- a/dwm.c
 +++ b/dwm.c
 @@ -242,6 +242,7 @@ static void tagmon(const Arg *arg);
- static void tile(Monitor *);
+ static void tile(Monitor *m);
  static void togglebar(const Arg *arg);
  static void togglefloating(const Arg *arg);
 +static void togglefulscr(const Arg *arg);
  static void toggletag(const Arg *arg);
  static void toggleview(const Arg *arg);
  static void unfocus(Client *c, int setfocus);
-@@ -1924,6 +1925,13 @@ togglefloating(const Arg *arg)
+@@ -1918,6 +1919,13 @@ togglefloating(const Arg *arg)
  	arrange(selmon);
  }
  
@@ -45,5 +45,5 @@ index 4507dd8..b4f0ef4 100644
  toggletag(const Arg *arg)
  {
 -- 
-2.25.1
+2.34.1
 

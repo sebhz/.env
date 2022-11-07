@@ -1,77 +1,14 @@
-From 9b697833c8b09291e855507c00bd44f5ab07f8f6 Mon Sep 17 00:00:00 2001
+From ec7130a4eec5ae0e6e7eab58d1bf228a939634d3 Mon Sep 17 00:00:00 2001
 From: sebhz <seb@zyglute.fr>
-Date: Sun, 2 Jan 2022 12:43:09 +0100
+Date: Mon, 7 Nov 2022 19:53:40 +0100
 Subject: [PATCH 2/3] Personal config
 
 
-diff --git a/bindings.h b/bindings.h
-new file mode 100644
-index 0000000..d4ffce7
---- /dev/null
-+++ b/bindings.h
-@@ -0,0 +1,57 @@
-+        static Key keys[] = {
-+	/* modifier                     key        function        argument */
-+	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-+	{ MODKEY|ControlMask,           XK_a,      spawn,          {.v = passmgrcmd} },
-+	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-+	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lockcmd } },
-+	{ 0,                XF86XK_AudioMute,      spawn,          {.v = togglevolcmd } },
-+	{ 0,         XF86XK_AudioLowerVolume,      spawn,          {.v = lovolcmd } },
-+	{ 0,         XF86XK_AudioRaiseVolume,      spawn,          {.v = hivolcmd } },
-+	{ 0,                XF86XK_AudioPlay,      spawn,          {.v = toggleaudioplaycmd } },
-+	{ 0,                   XF86XK_Search,      spawn,          {.v = showosdcmd } },
-+	{ 0,                            XK_Print,  spawn,          {.v = capturescreencmd } },
-+	{ MODKEY,                       XK_b,      togglebar,      {0} },
-+	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-+	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-+	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-+	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-+	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-+	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-+	{ MODKEY,                       XK_Return, zoom,           {0} },
-+	{ MODKEY,                       XK_Tab,    view,           {0} },
-+	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-+	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-+	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-+	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-+	{ MODKEY,                       XK_space,  setlayout,      {0} },
-+	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-+	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-+	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-+	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-+	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-+	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-+	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-+	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-+	/* AZERTY bindings and tags */
-+	{ MODKEY,                       XK_agrave, view,           {.ui = ~0 } },
-+	{ MODKEY|ShiftMask,             XK_agrave, tag,            {.ui = ~0 } },
-+	TAGKEYS(                        XK_1,                      0)
-+	TAGKEYS(                        XK_2,                      1)
-+	TAGKEYS(                        XK_3,                      2)
-+	TAGKEYS(                        XK_4,                      3)
-+	TAGKEYS(                        XK_5,                      4)
-+	TAGKEYS(                        XK_6,                      5)
-+	TAGKEYS(                        XK_7,                      6)
-+	TAGKEYS(                        XK_8,                      7)
-+	TAGKEYS(                        XK_9,                      8)
-+	TAGKEYS(                        XK_ampersand,              0)
-+	TAGKEYS(                        XK_eacute,                 1)
-+	TAGKEYS(                        XK_quotedbl,               2)
-+	TAGKEYS(                        XK_apostrophe,             3)
-+	TAGKEYS(                        XK_parenleft,              4)
-+	TAGKEYS(                        XK_minus,                  5)
-+	TAGKEYS(                        XK_egrave,                 6)
-+	TAGKEYS(                        XK_underscore,             7)
-+	TAGKEYS(                        XK_ccedilla,               8)
-+};
-+
 diff --git a/config.def.h b/config.def.h
-index e937116..3220ec2 100644
+index 2e9276a..4556670 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -3,15 +3,17 @@
+@@ -3,28 +3,32 @@
  /* appearance */
  static const unsigned int borderpx  = 1;        /* border pixel of windows */
  static const unsigned int snap      = 32;       /* snap pixel */
@@ -93,7 +30,15 @@ index e937116..3220ec2 100644
  static const char col_gray1[]       = "#222222";
  static const char col_gray2[]       = "#444444";
  static const char col_gray3[]       = "#bbbbbb";
-@@ -24,7 +26,7 @@ static const char *colors[][3]      = {
+ static const char col_gray4[]       = "#eeeeee";
+ static const char col_cyan[]        = "#005577";
++static const char col_emerald[]     = "#005c46";
++
+ static const char *colors[][3]      = {
+ 	/*               fg         bg         border   */
+ 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
++	[SchemeSel]  = { col_gray4, col_emerald,  col_emerald},
  };
  
  /* tagging */
@@ -102,7 +47,7 @@ index e937116..3220ec2 100644
  
  static const Rule rules[] = {
  	/* xprop(1):
-@@ -33,7 +35,8 @@ static const Rule rules[] = {
+@@ -33,7 +37,8 @@ static const Rule rules[] = {
  	 */
  	/* class      instance    title       tags mask     isfloating   monitor */
  	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
@@ -112,11 +57,13 @@ index e937116..3220ec2 100644
  };
  
  /* layout(s) */
-@@ -63,44 +66,17 @@ static const Layout layouts[] = {
+@@ -62,13 +67,29 @@ static const Layout layouts[] = {
+ 
  /* commands */
  static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
- static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 -static const char *termcmd[]  = { "st", NULL };
++static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_emerald, "-sf", col_gray4, NULL };
 +static const char *termcmd[]  = { "gnome-terminal", NULL };
 +static const char *lockcmd[]  = { "dwm-screensaver-wrapper", NULL };
 +static const char *lovolcmd[]  = { "dwm-audio-wrapper", "dn", NULL };
@@ -127,66 +74,65 @@ index e937116..3220ec2 100644
 +static const char *showosdcmd[] = { "dwm-osd-wrapper", NULL };
 +static const char *passmgrcmd[] = { "dwm-passmgr-wrapper", NULL };
  
--static Key keys[] = {
--	/* modifier                     key        function        argument */
--	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
--	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
--	{ MODKEY,                       XK_b,      togglebar,      {0} },
--	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
--	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
--	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
--	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
--	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
--	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
--	{ MODKEY,                       XK_Return, zoom,           {0} },
--	{ MODKEY,                       XK_Tab,    view,           {0} },
--	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
--	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
--	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
--	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
--	{ MODKEY,                       XK_space,  setlayout,      {0} },
--	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
--	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
--	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
--	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
--	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
--	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
--	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
--	TAGKEYS(                        XK_1,                      0)
--	TAGKEYS(                        XK_2,                      1)
--	TAGKEYS(                        XK_3,                      2)
--	TAGKEYS(                        XK_4,                      3)
--	TAGKEYS(                        XK_5,                      4)
--	TAGKEYS(                        XK_6,                      5)
--	TAGKEYS(                        XK_7,                      6)
--	TAGKEYS(                        XK_8,                      7)
--	TAGKEYS(                        XK_9,                      8)
+-static const Key keys[] = {
++static Key keys[] = {
+ 	/* modifier                     key        function        argument */
+ 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
++	{ MODKEY|ControlMask,           XK_a,      spawn,          {.v = passmgrcmd} },
+ 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
++	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lockcmd } },
++	{ 0,                XF86XK_AudioMute,      spawn,          {.v = togglevolcmd } },
++	{ 0,         XF86XK_AudioLowerVolume,      spawn,          {.v = lovolcmd } },
++	{ 0,         XF86XK_AudioRaiseVolume,      spawn,          {.v = hivolcmd } },
++	{ 0,                XF86XK_AudioPlay,      spawn,          {.v = toggleaudioplaycmd } },
++	{ 0,                   XF86XK_Search,      spawn,          {.v = showosdcmd } },
++	{ 0,                            XK_Print,  spawn,          {.v = capturescreencmd } },
+ 	{ MODKEY,                       XK_b,      togglebar,      {0} },
+ 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
+ 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+@@ -90,6 +111,10 @@ static const Key keys[] = {
+ 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+ 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
+ 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
++	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
++	/* AZERTY bindings and tags */
++	{ MODKEY,                       XK_agrave, view,           {.ui = ~0 } },
++	{ MODKEY|ShiftMask,             XK_agrave, tag,            {.ui = ~0 } },
+ 	TAGKEYS(                        XK_1,                      0)
+ 	TAGKEYS(                        XK_2,                      1)
+ 	TAGKEYS(                        XK_3,                      2)
+@@ -99,7 +124,15 @@ static const Key keys[] = {
+ 	TAGKEYS(                        XK_7,                      6)
+ 	TAGKEYS(                        XK_8,                      7)
+ 	TAGKEYS(                        XK_9,                      8)
 -	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
--};
-+#include "bindings.h"
++	TAGKEYS(                        XK_ampersand,              0)
++	TAGKEYS(                        XK_eacute,                 1)
++	TAGKEYS(                        XK_quotedbl,               2)
++	TAGKEYS(                        XK_apostrophe,             3)
++	TAGKEYS(                        XK_parenleft,              4)
++	TAGKEYS(                        XK_minus,                  5)
++	TAGKEYS(                        XK_egrave,                 6)
++	TAGKEYS(                        XK_underscore,             7)
++	TAGKEYS(                        XK_ccedilla,               8)
+ };
  
  /* button definitions */
- /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
-@@ -118,3 +94,4 @@ static Button buttons[] = {
- 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
- 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
- };
-+
 diff --git a/config.mk b/config.mk
-index 7084c33..e0350a2 100644
+index ef8acf7..79b81d1 100644
 --- a/config.mk
 +++ b/config.mk
-@@ -4,7 +4,7 @@ VERSION = 6.2
+@@ -4,7 +4,7 @@ VERSION = 6.4
  # Customize below to fit your system
  
  # paths
 -PREFIX = /usr/local
-+PREFIX = /usr/local/stow/dwm-6.2
++PREFIX = /usr/local/stow/dwm-6.4
  MANPREFIX = ${PREFIX}/share/man
  
  X11INC = /usr/X11R6/include
 diff --git a/dwm.c b/dwm.c
-index 68d48ab..4507dd8 100644
+index 1cb574b..bd147e3 100644
 --- a/dwm.c
 +++ b/dwm.c
 @@ -36,6 +36,7 @@
@@ -198,5 +144,5 @@ index 68d48ab..4507dd8 100644
  #include <X11/extensions/Xinerama.h>
  #endif /* XINERAMA */
 -- 
-2.25.1
+2.34.1
 
