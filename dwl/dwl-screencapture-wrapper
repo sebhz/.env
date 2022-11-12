@@ -1,0 +1,7 @@
+#!/bin/bash
+
+CAPTURE_DIR="${HOME}/Documents/screen_captures"
+mkdir -p "$CAPTURE_DIR"
+cap_filename="$(date +%Y%m%d%H%M%S).png"
+grim "${CAPTURE_DIR}/${cap_filename}"
+

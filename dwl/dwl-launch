@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Wrapper script before launching dwl.
+# Useful to set some env variables
+
+# If running from a tty - set XDG_RUNTIME_DIR
+[[ -z "$XDG_RUNTIME_DIR" ]] && declare -rx XDG_RUNTIME_DIR="$(mktemp -d)"
+
+declare -rx MOZ_ENABLE_WAYLAND=1
+dwl -s dwl-init
