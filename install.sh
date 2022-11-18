@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # dwm and dwl are a bit special. Do not stow them.
+stow -v cmus
 stow -v git
 stow -v i3
 stow -v pylint
