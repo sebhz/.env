@@ -10,3 +10,10 @@ stow -v vim
 stow -v wayland
 stow -v x
 
+if [[ ! -d /etc/stow ]]; then
+  sudo mkdir /etc/stow
+fi
+sudo cp -r interception /etc/stow
+cd /etc/stow
+sudo stow -v interception
+

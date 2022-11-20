@@ -9,8 +9,8 @@
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 dex --autostart --environment dwm
 
-# disable CapsLock
-setxkbmap -option caps:none
+# disable CapsLock - obsoleted by interception-tools
+# setxkbmap -option caps:none
 
 # Background...
 if [[ -e "${HOME}/.fehbg" ]]; then

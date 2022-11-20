@@ -1,0 +1,8 @@
+[Unit]
+Description=udevmon service
+
+[Service]
+ExecStart=/usr/local/bin/udevmon
+
+[Install]
+WantedBy=default.target
