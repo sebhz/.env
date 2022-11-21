@@ -13,7 +13,7 @@ stow -v x
 if [[ ! -d /etc/stow ]]; then
   sudo mkdir /etc/stow
 fi
-sudo cp -r interception /etc/stow
-cd /etc/stow
+sudo cp -r interception/etc /etc/stow/interception
+pushd /etc/stow
 sudo stow -v interception
-
+popd

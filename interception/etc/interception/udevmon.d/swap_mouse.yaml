@@ -1,0 +1,4 @@
+- JOB: intercept -g $DEVNODE | swap_mouse | uinput -d $DEVNODE
+  DEVICE:
+    EVENTS:
+      EV_KEY: [BTN_RIGHT, BTN_LEFT]
