@@ -1,11 +1,11 @@
-From 099c437a3d1efbbd157a26308afbe75a69d6e4bc Mon Sep 17 00:00:00 2001
+From 6fa97b4ba4f9c6e0aa911538ad6a99a8210cfc95 Mon Sep 17 00:00:00 2001
 From: sebhz <seb@zyglute.fr>
-Date: Thu, 10 Nov 2022 18:00:17 +0100
+Date: Sun, 27 Nov 2022 17:25:38 +0100
 Subject: [PATCH] local config
 
 
 diff --git a/config.def.h b/config.def.h
-index ec1f052..7d7c0cf 100644
+index b3caab3..0ca92f8 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -9,14 +9,14 @@ static const float focuscolor[]     = {1.0, 0.0, 0.0, 1.0};
@@ -25,7 +25,7 @@ index ec1f052..7d7c0cf 100644
  };
  
  /* layout(s) */
-@@ -98,14 +98,24 @@ static const double accel_speed = 0.0;
+@@ -99,14 +99,26 @@ static const double accel_speed = 0.0;
  #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
  
  /* commands */
@@ -37,6 +37,7 @@ index ec1f052..7d7c0cf 100644
 +static const char *togglevolcmd[]  = { "dwm-audio-wrapper", "mt", NULL };
 +static const char *capturescreencmd[]  = { "dwl-screencapture-wrapper", NULL };
 +static const char *lockcmd[]  = { "swaylock", NULL };
++static const char *sbtogglecmd[]  = { "somebar", "-c", "toggle", "all", NULL };
  
  static const Key keys[] = {
  	/* Note that Shift changes certain key codes: c -> C, 2 -> at, etc. */
@@ -48,10 +49,11 @@ index ec1f052..7d7c0cf 100644
 +	{ 0,                         XKB_KEY_XF86AudioRaiseVolume, spawn, {.v = hivolcmd} },
 +	{ 0,                         XKB_KEY_XF86AudioMute, spawn, {.v = togglevolcmd} },
 +	{ 0,                         XKB_KEY_Print,      spawn, {.v = capturescreencmd} },
++	{ MODKEY,                    XKB_KEY_b,          spawn,          {.v = sbtogglecmd} },
  	{ MODKEY,                    XKB_KEY_j,          focusstack,     {.i = +1} },
  	{ MODKEY,                    XKB_KEY_k,          focusstack,     {.i = -1} },
  	{ MODKEY,                    XKB_KEY_i,          incnmaster,     {.i = +1} },
-@@ -118,9 +128,8 @@ static const Key keys[] = {
+@@ -119,9 +131,8 @@ static const Key keys[] = {
  	{ MODKEY,                    XKB_KEY_t,          setlayout,      {.v = &layouts[0]} },
  	{ MODKEY,                    XKB_KEY_f,          setlayout,      {.v = &layouts[1]} },
  	{ MODKEY,                    XKB_KEY_m,          setlayout,      {.v = &layouts[2]} },
@@ -63,7 +65,7 @@ index ec1f052..7d7c0cf 100644
  	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_parenright, tag,            {.ui = ~0} },
  	{ MODKEY,                    XKB_KEY_comma,      focusmon,       {.i = WLR_DIRECTION_LEFT} },
 diff --git a/config.mk b/config.mk
-index 091c03a..0c9c3e2 100644
+index 091c03a..8f2785b 100644
 --- a/config.mk
 +++ b/config.mk
 @@ -4,11 +4,11 @@ VERSION  = `git describe --long --tags --dirty 2>/dev/null || echo $(_VERSION)`
@@ -71,7 +73,7 @@ index 091c03a..0c9c3e2 100644
  
  # paths
 -PREFIX = /usr/local
-+PREFIX = /usr/local/stow/dwl-v0.3.1-150-gf1639ba
++PREFIX = "/usr/local/stow/dwl-$(VERSION)"
  MANDIR = $(PREFIX)/share/man
  
  XWAYLAND =
