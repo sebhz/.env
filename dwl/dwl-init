@@ -3,9 +3,11 @@
 # Startup script for dwl - launches clients a la xinitrc
 # use with: dwl -s dwl-init.sh
 
+declare -r WP_DIR="${HOME}/Pictures/wallpapers"
+
 [[ -x "${HOME}/.screenlayout/wl-default.sh" ]] && "${HOME}/.screenlayout/wl-default.sh"
 [[ -n "$(which swayidle)" ]] && { swayidle -w timeout 300 'swaylock -f -c 000000' & }
-[[ -n "$(which swaybg)" ]] && { swaybg -m fit -i "${HOME}/Pictures/417284.jpg" & }
+[[ -n "$(which swaybg)" ]] && { swaybg -m fit -i "$(find ${WP_DIR} -type f | sort -R | head -1)" & }
 [[ -x "${HOME}/bin/pulse_monitor" ]] && { "${HOME}/bin/pulse_monitor" & }
 [[ -x "${HOME}/bin/dwmblocks" ]] && { "${HOME}/bin/dwmblocks" -w & }
 
