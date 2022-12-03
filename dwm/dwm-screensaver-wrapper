@@ -1,14 +1,19 @@
 #!/bin/bash
 
 # For recent versions of cmus, cmus-remote -U will do the same thing
-_cmus_playing=$(cmus-remote -Q 2>/dev/null | head -1 | cut -d' ' -f2)
-if [ "$_cmus_playing" == "playing" ]; then
+_cmus_playing="$(cmus-remote -Q 2>/dev/null | head -1 | cut -d' ' -f2)"
+if [[ "$_cmus_playing" == "playing" ]]; then
     cmus-remote -u
 fi
 
-# Change image subdirectory on each invocation
-_img_dir=$(ls -d ${HOME}/Pictures/screensaver/* | sort -R | head -1)
-sed -i -e "s#imageDirectory:.*#imageDirectory: $_img_dir#" ${HOME}/.xscreensaver
-
-xscreensaver-command -lock
+if [[ "$#" == "1" && $1 == "-w" ]]; then # Wayland compositor
+  declare -r WP_DIR="${HOME}/Pictures/wallpapers"
+  declare -r _img_file="$(find ${WP_DIR} -type f | sort -R | head -1)"
+  swaylock -f -c 000000 -i "$_img_file" --scaling=fit
+else # Good old X window manager
+  # Change image subdirectory on each invocation
+  declare -r _img_dir="$(ls -d ${HOME}/Pictures/screensaver/* | sort -R | head -1)"
+  sed -i -e "s#imageDirectory:.*#imageDirectory: $_img_dir#" ${HOME}/.xscreensaver
+  xscreensaver-command -lock
+fi
 

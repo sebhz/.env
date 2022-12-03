@@ -36,7 +36,7 @@ index b3caab3..0ca92f8 100644
 +static const char *hivolcmd[]  = { "dwm-audio-wrapper", "up", NULL };
 +static const char *togglevolcmd[]  = { "dwm-audio-wrapper", "mt", NULL };
 +static const char *capturescreencmd[]  = { "dwl-screencapture-wrapper", NULL };
-+static const char *lockcmd[]  = { "swaylock", NULL };
++static const char *lockcmd[]  = { "dwm-screensaver-wrapper", "-w", NULL };
 +static const char *sbtogglecmd[]  = { "somebar", "-c", "toggle", "all", NULL };
  
  static const Key keys[] = {
