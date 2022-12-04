@@ -1,0 +1,3 @@
+#!/bin/bash
+declare -r WP_DIR="${HOME}/Pictures/wallpapers"
+feh --no-fehbg --bg-fill "$(find ${WP_DIR} -type f | sort -R | head -1)"
