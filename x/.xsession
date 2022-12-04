@@ -21,7 +21,7 @@ fi
 
 if [ -e /usr/local/bin/dwm ]; then
     # Tell AWT toolkit we are a non reparenting WM
-    export _JAVA_AWT_WM_NONREPARENTING=1
+    declare -rx _JAVA_AWT_WM_NONREPARENTING=1
 
     # Stuff for statusbar
     [[ -f "${HOME}/bin/pulse_monitor" ]] &&  { "${HOME}/bin/pulse_monitor" & }

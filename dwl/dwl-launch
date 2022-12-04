@@ -7,4 +7,5 @@
 [[ -z "$XDG_RUNTIME_DIR" ]] && declare -rx XDG_RUNTIME_DIR="$(mktemp -d)"
 
 declare -rx MOZ_ENABLE_WAYLAND=1
+declare -rx _JAVA_AWT_WM_NONREPARENTING=1
 dwl -s dwl-init
