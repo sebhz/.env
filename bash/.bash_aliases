@@ -13,6 +13,10 @@ alias reboot='echo -n "Are you really sure this is what you want (y/n)? ";
                   /sbin/reboot
               fi'
 
+# Quick base conversions
+alias hex='printf "%x\n"'
+alias int='printf "%d\n"'
+
 # I like vim. e.g. for crontab
 export EDITOR=/usr/bin/vim
 
