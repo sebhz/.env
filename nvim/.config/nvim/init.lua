@@ -38,12 +38,12 @@ vim.cmd [[colorscheme peaksea]]
 -- No tab expansion for makefiles
 -- 2 spaces tabs for shell files
 -- TODO: go full Lua and use 'callback' option instead of 'command' Ex string
-autocmd_filetype_tbl = {
+local autocmd_filetype_tbl = {
     make=[[set noexpandtab]],
     sh=[[setlocal tabstop=2 shiftwidth=2 softtabstop=2]]
 }
 for pat, cmd in pairs(autocmd_filetype_tbl) do
-    vim.api.nvim_create_autocmd("FileType", { pattern = pat, command = cmd })
+    vim.api.nvim_create_autocmd('FileType', { pattern = pat, command = cmd })
 end
 
 -- Extra and dangling whitespace highlighting
@@ -55,4 +55,21 @@ vim.api.nvim_create_autocmd(
         group = ag,
     })
 vim.cmd [[highlight ExtraWhitespace ctermbg=red guibg=red]]
+
+-- Language servers setup
+vim.api.nvim_create_autocmd(
+    'FileType',
+    {
+        pattern = { 'c', 'C' },
+        callback = function()
+            vim.lsp.start({
+                name = 'clangd',
+                cmd = {'/usr/bin/clangd'},
+                root_dir = vim.fs.dirname(
+                    vim.fs.find({'compile_commands.json'}, {upward = true})[1]
+                ),
+            })
+        end
+    }
+)
 
