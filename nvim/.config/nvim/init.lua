@@ -32,18 +32,23 @@ end
 
 -- Syntax coloring
 vim.opt.background = 'dark'
-vim.cmd [[syntax on]]
-vim.cmd [[colorscheme peaksea]]
+vim.cmd [[
+    syntax on
+    colorscheme peaksea
+]]
 
 -- No tab expansion for makefiles
 -- 2 spaces tabs for shell files
--- TODO: go full Lua and use 'callback' option instead of 'command' Ex string
 local autocmd_filetype_tbl = {
-    make=[[set noexpandtab]],
-    sh=[[setlocal tabstop=2 shiftwidth=2 softtabstop=2]]
+    { pattern = 'make', callback = function() vim.bo.expandtab = false end },
+    { pattern = 'sh', callback = function()
+        vim.bo.tabstop = 2
+        vim.bo.shiftwidth=2
+        vim.bo.softtabstop=2
+    end },
 }
-for pat, cmd in pairs(autocmd_filetype_tbl) do
-    vim.api.nvim_create_autocmd('FileType', { pattern = pat, command = cmd })
+for i, opt in ipairs(autocmd_filetype_tbl) do
+    vim.api.nvim_create_autocmd('FileType', opt)
 end
 
 -- Extra and dangling whitespace highlighting
@@ -54,7 +59,7 @@ vim.api.nvim_create_autocmd(
         command = [[syn match ExtraWhitespace /\s\+$\| \+\ze\t/ containedin=ALL]],
         group = ag,
     })
-vim.cmd [[highlight ExtraWhitespace ctermbg=red guibg=red]]
+vim.api.nvim_set_hl(0, 'ExtraWhitespace', {ctermbg = 'red', bg = 'red'})
 
 -- Language servers setup
 vim.api.nvim_create_autocmd(
