@@ -58,13 +58,13 @@ vim.api.nvim_create_autocmd(
         pattern = '*',
         command = [[syn match ExtraWhitespace /\s\+$\| \+\ze\t/ containedin=ALL]],
         group = ag,
-    })
+    }
+)
 vim.api.nvim_set_hl(0, 'ExtraWhitespace', {ctermbg = 'red', bg = 'red'})
 
 -- Language servers setup
 vim.api.nvim_create_autocmd(
-    'FileType',
-    {
+    'FileType', {
         pattern = { 'c', 'C' },
         callback = function()
             vim.lsp.start({
@@ -78,3 +78,14 @@ vim.api.nvim_create_autocmd(
     }
 )
 
+-- Format buffers on write
+vim.api.nvim_create_autocmd(
+    'BufWritePre', {
+        pattern = '<buffer>',
+        callback = function()
+            if next(vim.lsp.get_active_clients()) then -- at least one client
+                vim.lsp.buf.format()
+            end
+        end
+    }
+)

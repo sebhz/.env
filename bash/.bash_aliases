@@ -18,7 +18,7 @@ alias hex='printf "%x\n"'
 alias int='printf "%d\n"'
 
 # I like vim. e.g. for crontab
-export EDITOR=/usr/bin/vim
+export EDITOR=vim
 
 # Tell ncurses to use Unicode box drawing when an UTF-8 locale is used
 # To have ncurses programs like moc render nicely when using Putty for
