@@ -30,6 +30,13 @@ for k, v in pairs({'<Up>', '<Down>', '<Left>', '<Right>'}) do
     vim.keymap.set('n', v, '<Nop>')
 end
 
+-- TODO: is there a full Lua equivalent of this
+-- Replace %:h by %% to mean "the directory of the current buffer"
+-- super useful for completion in :e, :sp, and friends
+vim.cmd [[
+    cnoremap <expr> %% getcmdtype() == ":" ? expand('%:h').'/' : '%%'
+]]
+
 -- Syntax coloring
 vim.opt.background = 'dark'
 vim.cmd [[
@@ -43,8 +50,8 @@ local autocmd_filetype_tbl = {
     { pattern = 'make', callback = function() vim.bo.expandtab = false end },
     { pattern = 'sh', callback = function()
         vim.bo.tabstop = 2
-        vim.bo.shiftwidth=2
-        vim.bo.softtabstop=2
+        vim.bo.shiftwidth = 2
+        vim.bo.softtabstop = 2
     end },
 }
 for i, opt in ipairs(autocmd_filetype_tbl) do
@@ -62,10 +69,23 @@ vim.api.nvim_create_autocmd(
 )
 vim.api.nvim_set_hl(0, 'ExtraWhitespace', {ctermbg = 'red', bg = 'red'})
 
+-- Black formatter for python
+vim.api.nvim_create_autocmd(
+    'FileType', {
+        pattern = { 'python' },
+        callback = function()
+            vim.api.nvim_create_user_command(
+            'Black',
+            '%!black -q -',
+            { nargs = 0 })
+        end
+    }
+)
+
 -- Language servers setup
 vim.api.nvim_create_autocmd(
     'FileType', {
-        pattern = { 'c', 'C' },
+        pattern = { 'c' },
         callback = function()
             vim.lsp.start({
                 name = 'clangd',
