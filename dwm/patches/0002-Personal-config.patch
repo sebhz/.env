@@ -1,14 +1,14 @@
-From ec7130a4eec5ae0e6e7eab58d1bf228a939634d3 Mon Sep 17 00:00:00 2001
+From c28e82f8f6b006c41bef49fcb04dfd6672098f09 Mon Sep 17 00:00:00 2001
 From: sebhz <seb@zyglute.fr>
 Date: Mon, 7 Nov 2022 19:53:40 +0100
 Subject: [PATCH 2/3] Personal config
 
 
 diff --git a/config.def.h b/config.def.h
-index 2e9276a..4556670 100644
+index 2e9276a..5416421 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -3,28 +3,32 @@
+@@ -3,28 +3,33 @@
  /* appearance */
  static const unsigned int borderpx  = 1;        /* border pixel of windows */
  static const unsigned int snap      = 32;       /* snap pixel */
@@ -33,12 +33,13 @@ index 2e9276a..4556670 100644
  static const char col_gray4[]       = "#eeeeee";
  static const char col_cyan[]        = "#005577";
 +static const char col_emerald[]     = "#005c46";
++static const char col_red[]         = "#ff0000";
 +
  static const char *colors[][3]      = {
  	/*               fg         bg         border   */
  	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
 -	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
-+	[SchemeSel]  = { col_gray4, col_emerald,  col_emerald},
++	[SchemeSel]  = { col_gray4, col_emerald,  col_red },
  };
  
  /* tagging */
@@ -47,7 +48,7 @@ index 2e9276a..4556670 100644
  
  static const Rule rules[] = {
  	/* xprop(1):
-@@ -33,7 +37,8 @@ static const Rule rules[] = {
+@@ -33,7 +38,8 @@ static const Rule rules[] = {
  	 */
  	/* class      instance    title       tags mask     isfloating   monitor */
  	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
@@ -57,7 +58,7 @@ index 2e9276a..4556670 100644
  };
  
  /* layout(s) */
-@@ -62,13 +67,29 @@ static const Layout layouts[] = {
+@@ -62,13 +68,29 @@ static const Layout layouts[] = {
  
  /* commands */
  static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -90,7 +91,7 @@ index 2e9276a..4556670 100644
  	{ MODKEY,                       XK_b,      togglebar,      {0} },
  	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
  	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-@@ -90,6 +111,10 @@ static const Key keys[] = {
+@@ -90,6 +112,10 @@ static const Key keys[] = {
  	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
  	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
  	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
@@ -101,7 +102,7 @@ index 2e9276a..4556670 100644
  	TAGKEYS(                        XK_1,                      0)
  	TAGKEYS(                        XK_2,                      1)
  	TAGKEYS(                        XK_3,                      2)
-@@ -99,7 +124,15 @@ static const Key keys[] = {
+@@ -99,7 +125,15 @@ static const Key keys[] = {
  	TAGKEYS(                        XK_7,                      6)
  	TAGKEYS(                        XK_8,                      7)
  	TAGKEYS(                        XK_9,                      8)

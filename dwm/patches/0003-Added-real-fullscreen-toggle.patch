@@ -1,14 +1,14 @@
-From 8a0ca56adb9f66362e2f5f5ef4aece52995ccb44 Mon Sep 17 00:00:00 2001
+From 550957ca8835d6a8b666d219bb9d34a0313f7069 Mon Sep 17 00:00:00 2001
 From: sebhz <seb@zyglute.fr>
 Date: Mon, 7 Nov 2022 19:54:40 +0100
 Subject: [PATCH 3/3] Added 'real' fullscreen toggle
 
 
 diff --git a/config.def.h b/config.def.h
-index 4556670..7c1e481 100644
+index 5416421..ce0364c 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -103,8 +103,8 @@ static Key keys[] = {
+@@ -104,8 +104,8 @@ static Key keys[] = {
  	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
  	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
  	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
