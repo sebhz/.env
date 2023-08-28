@@ -1,14 +1,16 @@
 #!/bin/bash
 
 # dwm and dwl are a bit special. Do not stow them.
-stow -v cmus
-stow -v git
-stow -v i3
-stow -v pylint
-stow -v screen
-stow -v vim
-stow -v wayland
-stow -v x
+stow -Rv cmus
+stow -Rv git
+stow -Rv i3
+stow -Rv pylint
+stow -Rv screen
+stow -Rv vim
+stow -Rv nvim
+stow -Rv wayland
+stow -Rv x
+stow -Rv clang
 
 if [[ ! -d /etc/stow ]]; then
   sudo mkdir /etc/stow
