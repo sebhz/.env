@@ -99,6 +99,7 @@ vim.api.nvim_create_autocmd(
 )
 
 -- Format buffers on write
+--[[
 vim.api.nvim_create_autocmd(
     'BufWritePre', {
         pattern = '<buffer>',
@@ -109,3 +110,5 @@ vim.api.nvim_create_autocmd(
         end
     }
 )
+]]--
+
