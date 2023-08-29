@@ -5,6 +5,12 @@
 	name = sebhz
 	email = seb@zyglute.fr
 
+[init]
+	defaultBranch = main
+
+[credential]
+	helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
+
 [color]
 	ui = auto
 	diff = auto
