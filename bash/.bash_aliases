@@ -1,5 +1,6 @@
 alias h=history
 alias emacs='emacs -nw'
+alias vim=nvim
 
 export PATH=${PATH}:${HOME}/bin
 
