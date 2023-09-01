@@ -1,0 +1,27 @@
+---
+- name: Clean env config repo
+  ansible.builtin.file:
+    path: "{{ host_envdir }}"
+    state: "absent"
+
+- name: Pull env config repo from git
+  git:
+    repo: "{{ env_repo }}"
+    dest: "{{ host_envdir }}"
+
+- name: Create real .config directory to avoid stowing it
+  file:
+    path: "{{ host_homedir }}/.config"
+    state: directory
+
+- name: Stow basic env config
+  ansible.builtin.command: stow -Rv {{ item }}
+  args:
+    chdir: "{{ host_envdir }}"
+  loop:
+    - git
+    - bash
+    - clang
+    - pylint
+    - nvim
+    - screen

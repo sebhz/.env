@@ -1,0 +1,7 @@
+headless:
+  hosts:
+    localhost:
+
+desktop:
+  hosts:
+    localhost:

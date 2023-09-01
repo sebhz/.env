@@ -1,0 +1,52 @@
+---
+- name: Check mandatory variables
+  assert:
+    that:
+      - "{{ item }} is defined"
+    fail_msg: "{{ item }} variable must be defined"
+  with_items:
+    - repo
+    - prg_name
+
+- name: Clean build directory
+  ansible.builtin.file:
+    path: "{{ work_dir }}"
+    state: "absent"
+
+- name: Pull "{{ repo }} from git"
+  git:
+    repo: "{{ repo }}"
+    dest: "{{ work_dir }}"
+    version: "{{ commit }}"
+
+- name: Look for patch files on remote machine
+  find:
+    paths: "{{ patch_dir }}"
+    patterns: "*.patch"
+  register: patch_glob
+
+- name: Patch source tree
+  ansible.builtin.command: git apply {{ item.path }}
+  args:
+    chdir: "{{ work_dir }}"
+  # Sort patches so that they are applied in consistent order
+  with_items:
+    "{{ patch_glob.files | sort(attribute='path') }}"
+
+- name: Compile {{ prg_name }}
+  ansible.builtin.command: make
+  args:
+    chdir: "{{ work_dir }}"
+
+- name: Install {{ prg_name }}
+  ansible.builtin.command: make PREFIX={{ install_dir }} install
+  args:
+    chdir: "{{ work_dir }}"
+  become: true
+  become_user: root
+
+- name: Remove build dir
+  ansible.builtin.file:
+    path: "{{ work_dir }}"
+    state: "absent"
+

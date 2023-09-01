@@ -1,0 +1,5 @@
+work_dir: /tmp/ansible-work
+astro_dir: "{{ work_dir }}/astro"
+astro_repo: https://github.com/sebhz/astro.git
+dwmblocks_dir: "{{ work_dir }}/dwmblocks"
+dwmblocks_repo: https://github.com/sebhz/dwmblocks.git

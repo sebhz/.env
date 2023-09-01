@@ -1,0 +1,8 @@
+---
+- hosts: headless
+  vars_files: ../configuration.yaml
+  become: true
+  roles:
+    - common
+    - role: headless
+      become_user: "{{ host_username }}"

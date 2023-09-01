@@ -1,0 +1,59 @@
+---
+- name: Clean build directory
+  ansible.builtin.file:
+    path: "{{ work_dir }}"
+    state: "absent"
+
+- name: Pull dwmblocks repo from git
+  git:
+    repo: "{{ dwmblocks_repo }}"
+    dest: "{{ dwmblocks_dir }}"
+
+- name: Pull astro repo from git
+  git:
+    repo: "{{ astro_repo }}"
+    dest: "{{ astro_dir }}"
+
+- name: Compile astro
+  ansible.builtin.command: make lib/libmeeus.a
+  args:
+    chdir: "{{ astro_dir }}/meeus/C"
+
+- name: Copy astro library in dwmblocks
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ dwmblocks_dir }}/components"
+    remote_src: yes
+  loop:
+    - "{{ astro_dir }}/meeus/C/lib/libmeeus.a"
+    - "{{ astro_dir }}/meeus/C/include/meeus.h"
+
+- name: Compile dwmblocks
+  ansible.builtin.command: make
+  args:
+    chdir: "{{ dwmblocks_dir }}"
+
+- name: Compile dwmblocks contribs
+  ansible.builtin.command: make
+  args:
+    chdir: "{{ dwmblocks_dir }}/contrib"
+
+- name: Create home bin directory
+  file:
+    path: "{{ host_homedir }}/bin"
+    state: directory
+
+- name: Copy binaries in home bin dir
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ host_homedir }}/bin"
+    remote_src: yes
+  loop:
+    - "{{ dwmblocks_dir }}/dwmblocks"
+    - "{{ dwmblocks_dir }}/contrib/pulse_monitor"
+
+- name: Remove build directories
+  ansible.builtin.file:
+    path: "{{ work_dir }}"
+    state: "absent"
+

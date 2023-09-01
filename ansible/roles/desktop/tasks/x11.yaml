@@ -1,0 +1,10 @@
+---
+- name: Install X11 packages
+  apt:
+    name:
+      - libx11-dev
+      - autorandr
+      - compton
+      - dex
+      - feh
+      - xterm

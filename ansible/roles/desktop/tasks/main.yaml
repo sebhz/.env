@@ -1,0 +1,13 @@
+---
+- import_tasks: x11.yaml
+  when: gfxsys == "X11"
+
+- import_tasks: wayland.yaml
+  when: gfxsys == "wayland"
+
+- name: Install desktop packages
+  apt:
+    name:
+      - cmus
+    state: present
+  when: ansible_facts['os_family'] == "Debian"

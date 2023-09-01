@@ -1,0 +1,75 @@
+---
+- hosts: desktop
+  vars_files: ../configuration.yaml
+  vars:
+    - install_root: /usr/local/stow
+    - dwm_name: dwm-6.4
+    - dwm_installdir: "{{ install_root }}/{{ dwm_name }}"
+    - dmenu_name: dmenu
+    - dmenu_installdir: "{{ install_root }}/{{ dmenu_name }}"
+  become: true
+  roles:
+    - common
+    - role: headless
+      become_user: "{{ host_username }}"
+    - desktop
+    - role: install_from_git
+      prg_name: "{{ dwm_name }}"
+      repo: https://git.suckless.org/dwm
+      commit: ba56fe9fea0a28d81
+      patch_dir: "{{ host_envdir }}/dwm/patches"
+      install_dir: "{{ dwm_installdir }}"
+    - role: install_from_git
+      prg_name: "{{ dmenu_name }}"
+      repo: https://git.suckless.org/dmenu/
+      install_dir: "{{ dmenu_installdir }}"
+    - role: dwmblocks
+      become_user: "{{ host_username }}"
+
+  tasks:
+    - name: Find dwm helpers
+      find:
+        paths: "{{ host_envdir }}/dwm"
+        patterns: "*-wrapper"
+      register: wrapper_glob
+
+    - name: Copy dwm helpers
+      ansible.builtin.copy:
+        src: "{{ item.path }}"
+        dest: "{{ dwm_installdir }}/bin/{{ item.path | basename }}"
+        remote_src: yes
+      with_items:
+         "{{ wrapper_glob.files }}"
+
+    - name: Stow compiled programs
+      ansible.builtin.command: stow -Rv {{ item }}
+      args:
+        chdir: "{{ install_root }}"
+      loop:
+        - "{{ dwm_name }}"
+        - "{{ dmenu_name }}"
+
+    - name: Stow desktop environment
+      ansible.builtin.command: stow -Rv {{ item }}
+      args:
+        chdir: "{{ host_envdir }}"
+      loop:
+        - x
+        - cmus
+
+    - name: Fix gdm3 Xsession file
+      copy:
+        dest: /etc/gdm3/Xsession
+        src: etc/gdm3/Xsession
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Create xsession file for dwm
+      copy:
+        dest: /usr/share/xsessions/old-x-session.desktop
+        src: usr/share/xsessions/old-x-session.desktop
+        owner: root
+        group: root
+        mode: 0644
+
