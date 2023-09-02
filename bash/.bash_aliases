@@ -2,8 +2,6 @@ alias h=history
 alias emacs='emacs -nw'
 alias vim=nvim
 
-export PATH=${PATH}:${HOME}/bin
-
 # Detachable cmus (moc seems unmaintainted these days...)
 alias cmus='screen -q -r -D cmus || screen -S cmus $(which cmus)'
 
