@@ -3,6 +3,8 @@
   apt:
     name:
       - libx11-dev
+      - libxft-dev
+      - libxinerama-dev
       - autorandr
       - compton
       - dex
