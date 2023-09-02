@@ -1,5 +1,0 @@
----
-- name: Not implemented
-  ansible.builtin.debug:
-    msg: "wayland backend is not implemented"
-

@@ -1,4 +1,0 @@
-work_dir: /tmp/ansible-work
-patch_dir: "{{ work_dir }}/patch"
-commit: HEAD
-install_dir: /usr/local
