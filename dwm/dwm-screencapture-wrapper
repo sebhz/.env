@@ -1,7 +1,0 @@
-#!/bin/bash
-
-CAPTURE_DIR=${HOME}/Documents/screen_captures
-mkdir -p $CAPTURE_DIR
-cap_filename="$(date +%Y%m%d%H%M%S).png"
-convert x:root "${CAPTURE_DIR}/${cap_filename}"
-

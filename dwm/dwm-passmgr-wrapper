@@ -1,4 +1,0 @@
-#!/bin/bash
-
-mono /usr/lib/keepass2/KeePass.exe --auto-type
-
